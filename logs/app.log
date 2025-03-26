@@ -914,3 +914,257 @@ INFO 2025-03-26 09:54:05,628 autoreload Watching for file changes with StatReloa
 INFO 2025-03-26 09:54:12,895 async_processor 异步消息处理器已启动
 INFO 2025-03-26 09:54:12,895 async_processor 异步消息处理器已初始化
 INFO 2025-03-26 09:54:12,895 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:50:38,395 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:50:38,395 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:50:38,395 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:50:44,702 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:50:44,703 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:50:44,703 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:52:18,796 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:52:18,797 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:52:18,797 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:52:19,812 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:52:19,813 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:52:19,813 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:52:19,822 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 10:52:36,590 basehttp "GET / HTTP/1.1" 302 0
+WARNING 2025-03-26 10:52:36,653 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+WARNING 2025-03-26 10:52:38,101 basehttp "GET /favicon.ico HTTP/1.1" 404 4925
+INFO 2025-03-26 10:52:43,300 basehttp "GET / HTTP/1.1" 302 0
+WARNING 2025-03-26 10:52:43,310 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+INFO 2025-03-26 10:52:51,298 basehttp "GET / HTTP/1.1" 302 0
+WARNING 2025-03-26 10:52:51,308 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+INFO 2025-03-26 10:52:59,797 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:52:59,797 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:52:59,797 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:53:06,275 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:53:06,276 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:53:06,276 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:53:11,078 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:53:11,078 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:53:11,079 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:53:12,262 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:53:12,263 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:53:12,263 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:53:12,275 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-26 10:53:17,543 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+WARNING 2025-03-26 10:53:21,502 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+INFO 2025-03-26 10:53:34,543 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:53:34,544 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:53:34,544 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:53:56,365 signals 用户已更新: admin (ID: 1)
+INFO 2025-03-26 10:54:00,774 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:54:00,775 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:54:00,775 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:54:01,795 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:54:01,797 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:54:01,797 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:54:01,808 autoreload Watching for file changes with StatReloader
+WARNING 2025-03-26 10:54:15,272 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+INFO 2025-03-26 10:54:20,338 basehttp "GET / HTTP/1.1" 302 0
+WARNING 2025-03-26 10:54:20,348 basehttp "GET /groups/groups/ HTTP/1.1" 404 5345
+INFO 2025-03-26 10:54:52,547 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:54:52,547 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:54:52,547 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:54:53,690 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:54:53,691 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:54:53,691 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:54:53,701 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 10:55:04,210 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-03-26 10:55:04,283 basehttp "GET /groups/management/ HTTP/1.1" 500 165507
+INFO 2025-03-26 10:55:05,121 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-03-26 10:55:05,159 basehttp "GET /groups/management/ HTTP/1.1" 500 165233
+INFO 2025-03-26 10:56:23,610 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:56:23,610 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:56:23,611 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:56:25,365 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:56:25,366 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:56:25,366 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:56:25,381 autoreload Watching for file changes with StatReloader
+ERROR 2025-03-26 10:56:33,189 basehttp "GET /groups/management/ HTTP/1.1" 500 189738
+INFO 2025-03-26 10:56:36,783 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-03-26 10:56:36,845 basehttp "GET /groups/management/ HTTP/1.1" 500 189601
+INFO 2025-03-26 10:57:16,620 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:57:16,621 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:57:16,622 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:57:17,714 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:57:17,715 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:57:17,715 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:57:17,730 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 10:57:22,832 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-03-26 10:57:22,916 basehttp "GET /groups/management/ HTTP/1.1" 500 189396
+WARNING 2025-03-26 10:57:24,291 basehttp "GET /favicon.ico HTTP/1.1" 404 5074
+INFO 2025-03-26 10:59:15,164 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:59:15,165 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:59:15,165 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:59:16,561 async_processor 异步消息处理器已启动
+INFO 2025-03-26 10:59:16,561 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 10:59:16,562 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 10:59:16,577 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 10:59:28,069 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-26 10:59:28,104 basehttp "GET /groups/management/ HTTP/1.1" 200 12078
+INFO 2025-03-26 10:59:28,192 basehttp "GET /static/groups/css/group_management.css HTTP/1.1" 200 1
+INFO 2025-03-26 10:59:28,193 basehttp "GET /static/groups/js/group_management.js HTTP/1.1" 200 2693
+INFO 2025-03-26 10:59:43,703 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-26 10:59:43,709 basehttp "GET /groups/management/ HTTP/1.1" 200 12078
+INFO 2025-03-26 10:59:53,731 basehttp "GET /groups/management/ HTTP/1.1" 200 12078
+ERROR 2025-03-26 10:59:54,743 basehttp "GET /agent/management/ HTTP/1.1" 500 105565
+WARNING 2025-03-26 11:00:03,700 basehttp "GET /api/agents/rules/ HTTP/1.1" 401 10324
+INFO 2025-03-26 11:00:03,726 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2025-03-26 11:00:03,726 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2025-03-26 11:00:03,728 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2025-03-26 11:00:03,732 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2025-03-26 11:00:03,733 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2025-03-26 11:00:03,735 basehttp "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2025-03-26 11:00:03,739 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2025-03-26 11:00:03,740 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2025-03-26 11:00:03,740 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2025-03-26 11:00:03,745 basehttp "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2025-03-26 11:00:03,746 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2025-03-26 11:00:03,753 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+WARNING 2025-03-26 11:00:09,627 basehttp "GET /api/agents/rules/ HTTP/1.1" 401 10324
+WARNING 2025-03-26 11:00:12,475 basehttp "GET /api/agents/rules/?format=json HTTP/1.1" 401 154
+WARNING 2025-03-26 11:00:14,475 basehttp "GET /api/agents/rules/ HTTP/1.1" 401 10324
+WARNING 2025-03-26 11:00:16,453 basehttp "GET /api/messaging/messages/ HTTP/1.1" 401 10279
+INFO 2025-03-26 11:00:19,269 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:19,298 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+INFO 2025-03-26 11:00:19,323 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-03-26 11:00:19,323 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-03-26 11:00:19,323 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22092
+INFO 2025-03-26 11:00:19,324 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+INFO 2025-03-26 11:00:19,324 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+INFO 2025-03-26 11:00:19,325 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-03-26 11:00:19,333 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-03-26 11:00:23,745 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:23,760 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+INFO 2025-03-26 11:00:24,310 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:24,321 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+INFO 2025-03-26 11:00:26,498 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:26,505 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4174
+INFO 2025-03-26 11:00:33,184 signals 用户已更新: admin (ID: 1)
+INFO 2025-03-26 11:00:33,193 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:33,224 basehttp "GET /admin/ HTTP/1.1" 200 20933
+INFO 2025-03-26 11:00:33,244 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-03-26 11:00:33,258 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-03-26 11:00:33,258 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-03-26 11:00:48,486 basehttp "GET /admin/ HTTP/1.1" 200 20933
+INFO 2025-03-26 11:00:50,324 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:50,349 basehttp "GET /admin/ HTTP/1.1" 200 20933
+INFO 2025-03-26 11:00:54,265 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-26 11:00:54,272 basehttp "GET /groups/management/ HTTP/1.1" 200 12078
+INFO 2025-03-26 11:03:20,988 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:03:20,989 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:03:20,989 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:03:22,632 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:03:22,632 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:03:22,633 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:03:22,646 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 11:03:37,482 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:03:37,608 basehttp "GET /static/agents/css/agent_management.css HTTP/1.1" 200 2452
+INFO 2025-03-26 11:03:37,611 basehttp "GET /static/agents/js/agent_management.js HTTP/1.1" 200 25903
+INFO 2025-03-26 11:03:37,711 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:03:42,477 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:03:42,552 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:03:49,908 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-26 11:03:49,915 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:05:51,735 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:09:26,569 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:09:29,299 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:09:29,343 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:09:35,033 signals 新群组已创建: 代理演示群组 (ID: 2)
+INFO 2025-03-26 11:09:35,044 signals 成员 admin 已加入群组 代理演示群组 (角色: admin)
+INFO 2025-03-26 11:09:35,057 signals 成员 测试助手 已加入群组 代理演示群组 (角色: member)
+INFO 2025-03-26 11:09:35,069 basehttp "GET /agent/demo/ HTTP/1.1" 200 21078
+WARNING 2025-03-26 11:09:35,416 basehttp "GET /ws/messaging/2/?token=cvzlgDgjh8vKUTcYHCqRKi62p8sp7iob HTTP/1.1" 404 5125
+WARNING 2025-03-26 11:09:38,733 basehttp "GET /ws/messaging/2/?token=cvzlgDgjh8vKUTcYHCqRKi62p8sp7iob HTTP/1.1" 404 5125
+INFO 2025-03-26 11:09:40,898 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 18985
+INFO 2025-03-26 11:09:40,919 basehttp "GET /static/agents/css/rule_management.css HTTP/1.1" 200 1838
+INFO 2025-03-26 11:09:40,920 basehttp "GET /static/agents/js/rule_management.js HTTP/1.1" 200 22200
+INFO 2025-03-26 11:09:42,280 basehttp "GET /websocket-test/ HTTP/1.1" 200 18416
+INFO 2025-03-26 11:09:42,305 basehttp "GET /static/messaging/js/websocket.js HTTP/1.1" 200 8772
+INFO 2025-03-26 11:09:42,306 basehttp "GET /static/messaging/css/messaging.css HTTP/1.1" 200 3556
+INFO 2025-03-26 11:09:45,417 basehttp "GET /admin/ HTTP/1.1" 200 20933
+INFO 2025-03-26 11:09:49,328 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:10:21,891 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:10:21,937 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:10:23,485 basehttp "GET /api/agents/skills/ HTTP/1.1" 200 2
+INFO 2025-03-26 11:10:59,775 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:10:59,817 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:13:54,226 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:13:57,678 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:13:57,761 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:13:58,457 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:14:08,533 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:14:08,585 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:14:11,674 basehttp "GET /agent/management/ HTTP/1.1" 200 24174
+INFO 2025-03-26 11:14:11,719 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:16:52,170 basehttp "GET /agent/management/ HTTP/1.1" 200 19631
+INFO 2025-03-26 11:16:52,394 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:16:53,973 basehttp "GET /agent/management/ HTTP/1.1" 200 19631
+INFO 2025-03-26 11:16:54,046 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:16:55,053 basehttp "GET /groups/management/ HTTP/1.1" 200 12076
+INFO 2025-03-26 11:17:17,317 basehttp "GET /agent/management/ HTTP/1.1" 200 19631
+INFO 2025-03-26 11:17:17,365 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:17:18,723 basehttp "GET /api/agents/skills/ HTTP/1.1" 200 2
+INFO 2025-03-26 11:17:50,305 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 23857
+INFO 2025-03-26 11:17:50,329 basehttp "GET /static/agents/css/rule_management.css HTTP/1.1" 200 6804
+INFO 2025-03-26 11:18:00,947 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 23857
+INFO 2025-03-26 11:18:03,952 basehttp "GET /agent/management/ HTTP/1.1" 200 19631
+INFO 2025-03-26 11:18:03,984 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:21:46,420 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:21:46,420 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:21:46,420 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:21:51,389 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:21:51,389 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:21:51,389 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:21:55,983 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:21:55,983 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:21:55,983 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:22:01,418 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:22:01,419 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:22:01,419 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:23:45,625 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:23:45,626 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:23:45,626 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:23:50,939 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:23:50,939 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:23:50,940 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:26:40,036 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:26:40,037 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:26:40,038 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:27:31,354 basehttp "GET /agent/management/ HTTP/1.1" 200 19926
+INFO 2025-03-26 11:27:31,407 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:27:35,195 basehttp "GET /groups/management/ HTTP/1.1" 200 12374
+INFO 2025-03-26 11:27:36,302 basehttp "GET /agent/management/ HTTP/1.1" 200 19926
+INFO 2025-03-26 11:27:36,346 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:27:37,009 basehttp "GET /agent/demo/ HTTP/1.1" 200 21376
+WARNING 2025-03-26 11:27:37,364 basehttp "GET /ws/messaging/2/?token=cvzlgDgjh8vKUTcYHCqRKi62p8sp7iob HTTP/1.1" 404 5125
+INFO 2025-03-26 11:27:38,288 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 24025
+INFO 2025-03-26 11:27:38,309 basehttp "GET /static/agents/css/rule_management.css HTTP/1.1" 200 6893
+INFO 2025-03-26 11:27:39,318 basehttp "GET /websocket-test/ HTTP/1.1" 200 20439
+INFO 2025-03-26 11:27:39,344 basehttp "GET /static/messaging/css/messaging.css HTTP/1.1" 200 3992
+INFO 2025-03-26 11:27:39,345 basehttp "GET /static/messaging/js/websocket.js HTTP/1.1" 200 8772
+INFO 2025-03-26 11:27:41,527 basehttp "GET /groups/management/ HTTP/1.1" 200 12374
+INFO 2025-03-26 11:27:53,209 basehttp "GET /agent/management/ HTTP/1.1" 200 19926
+INFO 2025-03-26 11:27:53,259 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:27:55,069 basehttp "GET /api/agents/skills/ HTTP/1.1" 200 2
+INFO 2025-03-26 11:27:58,891 basehttp "GET /api/agents/skills/ HTTP/1.1" 200 2
+INFO 2025-03-26 11:28:03,828 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:28:03,828 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:28:03,829 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:28:03,988 basehttp "GET /agent/demo/ HTTP/1.1" 200 16707
+INFO 2025-03-26 11:28:04,040 basehttp "GET /api/agents/?status=online HTTP/1.1" 200 219
+INFO 2025-03-26 11:28:05,312 async_processor 异步消息处理器已启动
+INFO 2025-03-26 11:28:05,313 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 11:28:05,313 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 11:28:05,327 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 11:28:06,527 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 24025
+INFO 2025-03-26 11:28:06,552 basehttp "GET /static/agents/css/rule_management.css HTTP/1.1" 304 0
+INFO 2025-03-26 11:28:13,117 basehttp "GET /agent-rules/management/ HTTP/1.1" 200 24025
+INFO 2025-03-26 11:28:13,975 basehttp "GET /websocket-test/ HTTP/1.1" 200 20439
+INFO 2025-03-26 11:28:14,000 basehttp "GET /static/messaging/css/messaging.css HTTP/1.1" 304 0
+INFO 2025-03-26 11:28:17,635 basehttp "GET /admin/ HTTP/1.1" 200 20933
+INFO 2025-03-26 11:28:33,403 basehttp "GET /groups/management/ HTTP/1.1" 200 12374
+INFO 2025-03-26 11:28:34,756 basehttp "GET /agent/management/ HTTP/1.1" 200 19926
+INFO 2025-03-26 11:28:34,806 basehttp "GET /api/agents/ HTTP/1.1" 200 219
+INFO 2025-03-26 11:28:35,722 basehttp "GET /api/agents/skills/ HTTP/1.1" 200 2
