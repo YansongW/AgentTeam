@@ -1,0 +1,375 @@
+/* 群聊界面样式 */
+
+/* 全局样式 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    height: calc(100vh - 60px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    min-height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+}
+
+.group-info {
+    background-color: #ffffff;
+}
+
+.group-name {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.members-list {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.sidebar-heading {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.member-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.member-item:hover {
+    background-color: #e9ecef;
+}
+
+.member-item .member-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.member-item .member-name {
+    font-size: 0.9rem;
+    margin-right: auto;
+}
+
+.member-item .member-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.member-item .member-status.online {
+    background-color: #28a745;
+}
+
+.member-item .member-status.offline {
+    background-color: #6c757d;
+}
+
+.member-item .member-status.busy {
+    background-color: #dc3545;
+}
+
+.member-item .member-role {
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.member-item .member-role.admin {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.member-item .member-role.member {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/* 主内容区域 */
+.main-content {
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.mobile-header {
+    background-color: #ffffff;
+    height: 50px;
+}
+
+/* 消息容器 */
+.messages-container {
+    background-color: #f5f7fa;
+    position: relative;
+    padding-bottom: 40px; /* 为输入提示留出空间 */
+}
+
+#messagesList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    padding: 12px 15px;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    max-width: 85%;
+    position: relative;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.message:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.message.own-message {
+    align-self: flex-end;
+    background-color: #e3f2fd;
+}
+
+.message.other-message {
+    align-self: flex-start;
+}
+
+.message.system-message {
+    align-self: center;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-style: italic;
+    max-width: 70%;
+    text-align: center;
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+}
+
+.message.agent-message {
+    background-color: #e8f5e9;
+}
+
+.message.error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border-left: 3px solid #f44336;
+}
+
+.message-header {
+    margin-bottom: 5px;
+}
+
+.message-sender {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.sender-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.sender-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.message-content {
+    word-break: break-word;
+    line-height: 1.5;
+}
+
+.message-content img {
+    max-width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.message-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+}
+
+.message-content .file-attachment {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.message-content .file-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.message-content .mention {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.message-content .mention.agent {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.message-actions {
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 0.8rem;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+}
+
+.message-actions button {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+}
+
+.typing-status {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* 消息输入区域 */
+.message-input-container {
+    background-color: #ffffff;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.message-form {
+    position: relative;
+}
+
+#messageInput {
+    resize: none;
+    border-radius: 20px;
+    padding-right: 50px;
+    height: auto;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+#sendBtn {
+    border-radius: 0 20px 20px 0;
+}
+
+/* 文件上传相关 */
+.attachment-preview {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.attachment-preview img {
+    max-height: 150px;
+    border-radius: 4px;
+}
+
+.attachment-preview .remove-attachment {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* 响应式调整 */
+@media (max-width: 767.98px) {
+    .container-fluid {
+        padding: 0;
+    }
+    
+    .messages-container {
+        padding: 10px;
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .message-input-container {
+        padding: 10px;
+    }
+    
+    /* 移动端侧边栏显示控制 */
+    .sidebar.show {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 100%;
+        z-index: 1050;
+    }
+    
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1049;
+    }
+} 

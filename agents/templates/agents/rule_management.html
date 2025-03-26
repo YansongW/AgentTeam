@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}代理监听规则管理{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'agents/css/rule_management.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">代理监听规则管理</h1>
+            
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">已有规则</h5>
+                    <button class="btn btn-primary" id="createRuleBtn">创建新规则</button>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info" id="noRulesAlert" style="display: none;">
+                        当前没有配置任何监听规则。点击"创建新规则"按钮开始配置。
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="rulesTable">
+                            <thead>
+                                <tr>
+                                    <th>规则名称</th>
+                                    <th>触发类型</th>
+                                    <th>优先级</th>
+                                    <th>状态</th>
+                                    <th>监听范围</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rulesTableBody">
+                                <!-- 规则列表将通过JS动态加载 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">规则测试</h5>
+                </div>
+                <div class="card-body">
+                    <form id="ruleTestForm">
+                        <div class="form-group mb-3">
+                            <label for="ruleSelect">选择要测试的规则</label>
+                            <select class="form-control" id="ruleSelect" required>
+                                <option value="">-- 请选择规则 --</option>
+                                <!-- 规则选项将通过JS动态加载 -->
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="messageContent">测试消息内容</label>
+                            <textarea class="form-control" id="messageContent" rows="3" placeholder="输入要测试的消息内容" required></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="messageType">消息类型</label>
+                            <select class="form-control" id="messageType">
+                                <option value="text">文本消息</option>
+                                <option value="image">图片消息</option>
+                                <option value="command">命令消息</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="applyTransformation">
+                            <label class="form-check-label" for="applyTransformation">
+                                应用规则转换
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">测试规则</button>
+                    </form>
+                    
+                    <div class="mt-4" id="testResultContainer" style="display: none;">
+                        <h5>测试结果</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <pre id="testResultContent" class="mb-0"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 创建/编辑规则模态框 -->
+<div class="modal fade" id="ruleModal" tabindex="-1" aria-labelledby="ruleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ruleModalLabel">创建规则</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ruleForm">
+                    <input type="hidden" id="ruleId">
+                    <div class="form-group mb-3">
+                        <label for="agentSelect">代理</label>
+                        <select class="form-control" id="agentSelect" required>
+                            <option value="">-- 请选择代理 --</option>
+                            <!-- 代理选项将通过JS动态加载 -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ruleName">规则名称</label>
+                        <input type="text" class="form-control" id="ruleName" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="ruleDescription">规则描述</label>
+                        <textarea class="form-control" id="ruleDescription" rows="2"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="triggerType">触发类型</label>
+                        <select class="form-control" id="triggerType" required>
+                            <option value="keyword">关键词匹配</option>
+                            <option value="regex">正则表达式</option>
+                            <option value="mention">提及代理</option>
+                            <option value="all_messages">所有消息</option>
+                            <option value="sentiment">情绪分析</option>
+                            <option value="context_aware">上下文感知</option>
+                            <option value="custom">自定义条件</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 条件配置区域 - 根据触发类型动态显示 -->
+                    <div class="condition-config mb-3">
+                        <!-- 关键词匹配 -->
+                        <div id="keywordCondition" class="condition-section">
+                            <label>关键词列表</label>
+                            <div class="keyword-list mb-2">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control keyword-input" placeholder="输入关键词">
+                                    <button class="btn btn-outline-secondary add-keyword-btn" type="button">添加</button>
+                                </div>
+                            </div>
+                            <div class="keywords-container"></div>
+                        </div>
+                        
+                        <!-- 正则表达式 -->
+                        <div id="regexCondition" class="condition-section" style="display:none;">
+                            <label for="regexPattern">正则表达式</label>
+                            <input type="text" class="form-control" id="regexPattern" placeholder="例如: \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b">
+                        </div>
+                        
+                        <!-- 情绪分析 -->
+                        <div id="sentimentCondition" class="condition-section" style="display:none;">
+                            <div class="form-group mb-3">
+                                <label for="sentimentType">目标情绪</label>
+                                <select class="form-control" id="sentimentType">
+                                    <option value="positive">积极</option>
+                                    <option value="negative">消极</option>
+                                    <option value="neutral">中性</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="sentimentThreshold">情绪阈值</label>
+                                <input type="range" class="form-range" id="sentimentThreshold" min="0.1" max="1.0" step="0.1" value="0.5">
+                                <div class="d-flex justify-content-between">
+                                    <small>低 (0.1)</small>
+                                    <small id="sentimentThresholdValue">0.5</small>
+                                    <small>高 (1.0)</small>
+                                </div>
+                                <small class="form-text text-muted">阈值越低，规则更容易触发</small>
+                            </div>
+                        </div>
+                        
+                        <!-- 上下文感知 -->
+                        <div id="contextAwareCondition" class="condition-section" style="display:none;">
+                            <div class="form-group mb-3">
+                                <label>上下文关键词</label>
+                                <div class="keyword-list mb-2">
+                                    <div class="input-group mb-1">
+                                        <input type="text" class="form-control context-keyword-input" placeholder="输入关键词">
+                                        <button class="btn btn-outline-secondary add-context-keyword-btn" type="button">添加</button>
+                                    </div>
+                                </div>
+                                <div class="context-keywords-container"></div>
+                                <small class="form-text text-muted">规则将匹配包含这些关键词的上下文</small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="contextSize">上下文范围（消息数量）</label>
+                                <input type="number" class="form-control" id="contextSize" min="1" max="10" value="3">
+                                <small class="form-text text-muted">检查最近的几条消息</small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="matchThreshold">匹配阈值</label>
+                                <input type="range" class="form-range" id="matchThreshold" min="0.1" max="1.0" step="0.1" value="0.7">
+                                <div class="d-flex justify-content-between">
+                                    <small>低 (0.1)</small>
+                                    <small id="matchThresholdValue">0.7</small>
+                                    <small>高 (1.0)</small>
+                                </div>
+                                <small class="form-text text-muted">有多大比例的关键词需要被匹配</small>
+                            </div>
+                        </div>
+                        
+                        <!-- 其他条件类型的配置... -->
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="responseType">响应类型</label>
+                        <select class="form-control" id="responseType" required>
+                            <option value="auto_reply">自动回复</option>
+                            <option value="notification">通知</option>
+                            <option value="task">创建任务</option>
+                            <option value="action">执行动作</option>
+                            <option value="custom">自定义响应</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 响应配置区域 - 根据响应类型动态显示 -->
+                    <div class="response-config mb-3">
+                        <!-- 自动回复 -->
+                        <div id="autoReplyResponse" class="response-section">
+                            <label for="replyTemplate">回复模板</label>
+                            <textarea class="form-control" id="replyTemplate" rows="3" placeholder="你好，{user}! 我是{agent_name}，很高兴为你服务。"></textarea>
+                            <small class="form-text text-muted">可用变量: {user}, {agent_name}, {original_message}</small>
+                        </div>
+                        
+                        <!-- 其他响应类型的配置... -->
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="rulePriority">优先级</label>
+                        <input type="number" class="form-control" id="rulePriority" min="1" max="100" value="10">
+                        <small class="form-text text-muted">数字越小优先级越高（1-100）</small>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label>监听范围</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="listenInGroups" checked>
+                            <label class="form-check-label" for="listenInGroups">
+                                在群组中监听
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="listenInDirect" checked>
+                            <label class="form-check-label" for="listenInDirect">
+                                在直接消息中监听
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="cooldownPeriod">冷却时间（秒）</label>
+                        <input type="number" class="form-control" id="cooldownPeriod" min="0" value="0">
+                        <small class="form-text text-muted">规则触发后的冷却时间，0表示无冷却</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveRuleBtn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'agents/js/rule_management.js' %}"></script>
+{% endblock %} 

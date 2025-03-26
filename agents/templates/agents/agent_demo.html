@@ -1,0 +1,518 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}@代理功能演示 | Multi-Agent协作平台{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: 600px;
+        overflow-y: auto;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        background-color: #f9f9f9;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        max-width: 80%;
+    }
+    
+    .message.sent {
+        align-self: flex-end;
+        margin-left: auto;
+    }
+    
+    .message.received {
+        align-self: flex-start;
+    }
+    
+    .message-bubble {
+        padding: 10px 15px;
+        border-radius: 18px;
+        position: relative;
+    }
+    
+    .sent .message-bubble {
+        background-color: #dcf8c6;
+        border-bottom-right-radius: 4px;
+    }
+    
+    .received .message-bubble {
+        background-color: #ffffff;
+        border-bottom-left-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    
+    .message-info {
+        font-size: 0.8em;
+        color: #666;
+        margin-bottom: 3px;
+    }
+    
+    .agent-message .message-bubble {
+        background-color: #e1f5fe;
+        border-bottom-left-radius: 4px;
+    }
+    
+    .system-message {
+        align-self: center;
+        text-align: center;
+        margin: 10px 0;
+        color: #666;
+        font-size: 0.9em;
+    }
+    
+    .mention {
+        background-color: #E3F2FD;
+        border-radius: 4px;
+        padding: 2px 4px;
+        font-weight: bold;
+    }
+    
+    .agent-list {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .agent-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    .agent-item:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .agent-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #bbdefb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+        color: #1976d2;
+    }
+    
+    .agent-info {
+        flex: 1;
+    }
+    
+    .agent-name {
+        font-weight: bold;
+    }
+    
+    .agent-role {
+        font-size: 0.8em;
+        color: #666;
+    }
+    
+    .typing-indicator {
+        padding: 10px;
+        color: #666;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>{{ demo_group.name }}</h5>
+                    <span class="badge bg-primary">{{ agents|length }} 个代理在线</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="chat-container" id="chatContainer">
+                        <!-- 系统消息 -->
+                        <div class="message system-message">
+                            系统: 欢迎来到代理演示群组。在消息中使用 @代理名称 可以和代理交互！
+                        </div>
+                    </div>
+                    <div class="typing-indicator" id="typingIndicator"></div>
+                    <div class="p-3 border-top">
+                        <form id="messageForm">
+                            <div class="input-group">
+                                <input type="text" id="messageInput" class="form-control" placeholder="输入消息，使用@提及代理...">
+                                <button class="btn btn-primary" type="submit">发送</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>可用代理</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="agent-list">
+                        {% for agent in agents %}
+                        <div class="agent-item" data-agent-id="{{ agent.id }}" data-agent-name="{{ agent.name }}">
+                            <div class="agent-avatar">{{ agent.name|first }}</div>
+                            <div class="agent-info">
+                                <div class="agent-name">{{ agent.name }}</div>
+                                <div class="agent-role">{{ agent.get_role_display }}</div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="alert alert-info">
+                            目前没有可用的代理。
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>使用说明</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>在消息中使用 <code>@代理名称</code> 提及代理</li>
+                        <li>您也可以使用 <code>@agent:代理名称</code> 格式明确指定代理</li>
+                        <li>点击右侧的代理列表可以自动添加@提及</li>
+                        <li>代理会根据自己的角色和提示词进行回复</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatContainer = document.getElementById('chatContainer');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const agentItems = document.querySelectorAll('.agent-item');
+        
+        let socket = null;
+        let userId = "{{ request.user.id }}";
+        let username = "{{ request.user.username }}";
+        let groupId = "{{ demo_group.id }}";
+        
+        // 连接WebSocket
+        connectWebSocket();
+        
+        // 添加事件监听器
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+        
+        agentItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const agentName = this.getAttribute('data-agent-name');
+                insertAgentMention(agentName);
+            });
+        });
+        
+        // 监听输入，发送正在输入状态
+        let typingTimeout = null;
+        messageInput.addEventListener('input', function() {
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            } else {
+                sendTypingStatus(true);
+            }
+            
+            typingTimeout = setTimeout(() => {
+                sendTypingStatus(false);
+                typingTimeout = null;
+            }, 2000);
+        });
+        
+        // 连接WebSocket
+        function connectWebSocket() {
+            // 获取CSRF令牌
+            const csrftoken = getCookie('csrftoken');
+            
+            // 构建WebSocket URL
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws/messaging/${groupId}/?token=${csrftoken}`;
+            
+            // 创建WebSocket连接
+            socket = new WebSocket(wsUrl);
+            
+            // 连接建立时的处理
+            socket.onopen = function(e) {
+                console.log('WebSocket连接已建立');
+                addSystemMessage('连接已建立，可以开始聊天了');
+            };
+            
+            // 接收消息的处理
+            socket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                console.log('收到消息:', data);
+                handleIncomingMessage(data);
+            };
+            
+            // 错误处理
+            socket.onerror = function(e) {
+                console.error('WebSocket错误:', e);
+                addSystemMessage('连接发生错误，请刷新页面重试');
+            };
+            
+            // 连接关闭时的处理
+            socket.onclose = function(e) {
+                console.log('WebSocket连接已关闭');
+                addSystemMessage('连接已关闭');
+                
+                // 可以尝试重新连接
+                setTimeout(connectWebSocket, 3000);
+            };
+        }
+        
+        // 发送消息
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                // 创建消息对象
+                const message = {
+                    message_type: 'chat',
+                    sender: {
+                        id: userId,
+                        type: 'user',
+                        name: username
+                    },
+                    timestamp: new Date().toISOString(),
+                    payload: {
+                        text: text,
+                        group_id: groupId
+                    }
+                };
+                
+                // 发送消息
+                socket.send(JSON.stringify(message));
+                
+                // 清空输入框
+                messageInput.value = '';
+                
+                // 添加到聊天记录
+                addUserMessage(text, username);
+                
+                // 清除输入状态
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                    sendTypingStatus(false);
+                    typingTimeout = null;
+                }
+            } else {
+                addSystemMessage('连接已断开，无法发送消息');
+            }
+        }
+        
+        // 发送输入状态
+        function sendTypingStatus(isTyping) {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                const message = {
+                    message_type: 'typing',
+                    sender: {
+                        id: userId,
+                        type: 'user',
+                        name: username
+                    },
+                    timestamp: new Date().toISOString(),
+                    payload: {
+                        is_typing: isTyping,
+                        group_id: groupId
+                    }
+                };
+                
+                socket.send(JSON.stringify(message));
+            }
+        }
+        
+        // 处理收到的消息
+        function handleIncomingMessage(data) {
+            // 根据消息类型处理
+            switch (data.message_type) {
+                case 'chat':
+                    // 其他用户的聊天消息
+                    if (data.sender.id !== userId) {
+                        addReceivedMessage(data.payload.text, data.sender.name);
+                    }
+                    break;
+                    
+                case 'agent_response':
+                    // 代理响应
+                    addAgentMessage(data.payload.text, data.sender.name);
+                    break;
+                    
+                case 'typing':
+                    // 用户输入状态
+                    if (data.sender.id !== userId && data.payload.is_typing) {
+                        typingIndicator.textContent = `${data.sender.name} 正在输入...`;
+                        setTimeout(() => {
+                            typingIndicator.textContent = '';
+                        }, 3000);
+                    }
+                    break;
+                    
+                case 'error':
+                    // 错误消息
+                    addSystemMessage(`错误: ${data.payload.text}`);
+                    break;
+                    
+                case 'system':
+                    // 系统消息
+                    addSystemMessage(data.payload.text);
+                    break;
+            }
+        }
+        
+        // 添加用户自己发送的消息
+        function addUserMessage(text, senderName) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message sent';
+            
+            // 创建包含发送者信息的div
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'message-info';
+            infoDiv.textContent = `${senderName} · ${formatTime(new Date())}`;
+            
+            // 创建消息气泡
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            
+            // 处理@提及
+            bubbleDiv.innerHTML = formatMessageWithMentions(text);
+            
+            // 将各部分添加到消息div
+            messageDiv.appendChild(infoDiv);
+            messageDiv.appendChild(bubbleDiv);
+            
+            // 添加到聊天容器
+            chatContainer.appendChild(messageDiv);
+            
+            // 滚动到底部
+            scrollToBottom();
+        }
+        
+        // 添加收到的其他用户消息
+        function addReceivedMessage(text, senderName) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message received';
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'message-info';
+            infoDiv.textContent = `${senderName} · ${formatTime(new Date())}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = formatMessageWithMentions(text);
+            
+            messageDiv.appendChild(infoDiv);
+            messageDiv.appendChild(bubbleDiv);
+            
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+        
+        // 添加代理消息
+        function addAgentMessage(text, agentName) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message received agent-message';
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'message-info';
+            infoDiv.textContent = `${agentName} · ${formatTime(new Date())}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+            
+            messageDiv.appendChild(infoDiv);
+            messageDiv.appendChild(bubbleDiv);
+            
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+        
+        // 添加系统消息
+        function addSystemMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system-message';
+            messageDiv.textContent = `系统: ${text}`;
+            
+            chatContainer.appendChild(messageDiv);
+            scrollToBottom();
+        }
+        
+        // 格式化带有@提及的消息
+        function formatMessageWithMentions(text) {
+            // 匹配@用户名或@agent:用户名
+            return text.replace(/@(agent:)?([^\s]+)/g, '<span class="mention">@$1$2</span>');
+        }
+        
+        // 向输入框插入@代理
+        function insertAgentMention(agentName) {
+            const cursorPos = messageInput.selectionStart;
+            const textBefore = messageInput.value.substring(0, cursorPos);
+            const textAfter = messageInput.value.substring(cursorPos);
+            
+            // 检查光标前是否已有空格
+            const needSpace = textBefore.length > 0 && !textBefore.endsWith(' ');
+            
+            // 插入@代理名称
+            messageInput.value = textBefore + (needSpace ? ' ' : '') + `@${agentName} ` + textAfter;
+            
+            // 设置光标位置
+            const newCursorPos = textBefore.length + (needSpace ? 1 : 0) + agentName.length + 2;
+            messageInput.setSelectionRange(newCursorPos, newCursorPos);
+            
+            // 聚焦输入框
+            messageInput.focus();
+        }
+        
+        // 格式化时间
+        function formatTime(date) {
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // 滚动到底部
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // 获取Cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+{% endblock %} 

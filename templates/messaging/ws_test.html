@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket消息测试</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .sent {
+            background-color: #dcf8c6;
+            margin-left: 40px;
+            border-left: 4px solid #4CAF50;
+        }
+        .received {
+            background-color: #f1f1f1;
+            margin-right: 40px;
+            border-left: 4px solid #2196F3;
+        }
+        .system {
+            background-color: #fff9c4;
+            border-left: 4px solid #FFC107;
+        }
+        .error {
+            background-color: #ffcdd2;
+            border-left: 4px solid #F44336;
+        }
+        .message-time {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+        }
+        .message-sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .status {
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .disconnected {
+            background-color: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket消息测试</h1>
+    
+    <div class="card">
+        <div class="form-group">
+            <label for="token">JWT令牌:</label>
+            <input type="text" id="token" placeholder="输入您的JWT令牌">
+        </div>
+        
+        <div class="form-group">
+            <label for="group-id">群组ID (可选):</label>
+            <input type="text" id="group-id" placeholder="输入要连接的群组ID">
+        </div>
+        
+        <div class="form-group">
+            <button id="connect">连接</button>
+            <button id="disconnect" disabled>断开</button>
+        </div>
+        
+        <div id="connection-status" class="status disconnected">
+            状态: 未连接
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="message-container" id="messages">
+            <!-- 消息将在这里显示 -->
+        </div>
+        
+        <div class="form-group">
+            <label for="message-type">消息类型:</label>
+            <select id="message-type">
+                <option value="chat">聊天消息</option>
+                <option value="ping">心跳检测</option>
+                <option value="typing">正在输入</option>
+                <option value="read_receipt">已读回执</option>
+            </select>
+        </div>
+        
+        <div class="form-group" id="typing-controls" style="display: none;">
+            <label for="typing-status">输入状态:</label>
+            <select id="typing-status">
+                <option value="true">正在输入</option>
+                <option value="false">停止输入</option>
+            </select>
+        </div>
+        
+        <div class="form-group" id="message-content">
+            <label for="message">消息内容:</label>
+            <textarea id="message" placeholder="输入消息内容"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <button id="send" disabled>发送</button>
+            <button id="clear-messages">清空消息</button>
+        </div>
+    </div>
+    
+    <script>
+        let socket = null;
+        let userId = null;
+        let username = null;
+        
+        // DOM元素
+        const tokenInput = document.getElementById('token');
+        const groupIdInput = document.getElementById('group-id');
+        const connectButton = document.getElementById('connect');
+        const disconnectButton = document.getElementById('disconnect');
+        const connectionStatus = document.getElementById('connection-status');
+        const messagesContainer = document.getElementById('messages');
+        const messageTypeSelect = document.getElementById('message-type');
+        const typingControls = document.getElementById('typing-controls');
+        const typingStatus = document.getElementById('typing-status');
+        const messageContent = document.getElementById('message-content');
+        const messageInput = document.getElementById('message');
+        const sendButton = document.getElementById('send');
+        const clearMessagesButton = document.getElementById('clear-messages');
+        
+        // 事件监听器
+        connectButton.addEventListener('click', connect);
+        disconnectButton.addEventListener('click', disconnect);
+        sendButton.addEventListener('click', sendMessage);
+        clearMessagesButton.addEventListener('click', clearMessages);
+        messageTypeSelect.addEventListener('change', handleMessageTypeChange);
+        
+        // 当消息类型改变时更新界面
+        function handleMessageTypeChange() {
+            const messageType = messageTypeSelect.value;
+            
+            if (messageType === 'typing') {
+                typingControls.style.display = 'block';
+                messageContent.style.display = 'none';
+            } else {
+                typingControls.style.display = 'none';
+                messageContent.style.display = 'block';
+            }
+            
+            if (messageType === 'ping') {
+                messageInput.value = '心跳检测';
+            }
+        }
+        
+        // 连接WebSocket
+        function connect() {
+            const token = tokenInput.value.trim();
+            const groupId = groupIdInput.value.trim();
+            
+            if (!token) {
+                addMessage('系统', '请输入JWT令牌', 'error');
+                return;
+            }
+            
+            try {
+                // 解析令牌获取用户信息（假设JWT的payload部分是Base64编码的JSON）
+                const tokenParts = token.split('.');
+                if (tokenParts.length === 3) {
+                    const payload = JSON.parse(atob(tokenParts[1]));
+                    userId = payload.user_id;
+                    username = payload.username || '用户';
+                }
+            } catch (error) {
+                console.error('解析令牌失败:', error);
+            }
+            
+            // 构建WebSocket URL
+            let wsUrl;
+            if (groupId) {
+                wsUrl = `ws://${window.location.host}/ws/messaging/groups/${groupId}/?token=${token}`;
+            } else {
+                wsUrl = `ws://${window.location.host}/ws/messaging/?token=${token}`;
+            }
+            
+            // 创建WebSocket连接
+            socket = new WebSocket(wsUrl);
+            
+            socket.onopen = function(e) {
+                connectionStatus.textContent = '状态: 已连接';
+                connectionStatus.classList.remove('disconnected');
+                
+                connectButton.disabled = true;
+                disconnectButton.disabled = false;
+                sendButton.disabled = false;
+                
+                addMessage('系统', '已成功连接到WebSocket服务器', 'system');
+            };
+            
+            socket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                handleIncomingMessage(data);
+            };
+            
+            socket.onclose = function(e) {
+                if (e.wasClean) {
+                    addMessage('系统', `连接已关闭, 代码: ${e.code}, 原因: ${e.reason}`, 'system');
+                } else {
+                    addMessage('系统', '连接意外关闭', 'error');
+                }
+                
+                connectionStatus.textContent = '状态: 未连接';
+                connectionStatus.classList.add('disconnected');
+                
+                connectButton.disabled = false;
+                disconnectButton.disabled = true;
+                sendButton.disabled = true;
+            };
+            
+            socket.onerror = function(error) {
+                addMessage('系统', `WebSocket错误: ${error.message}`, 'error');
+                connectionStatus.textContent = '状态: 错误';
+                connectionStatus.classList.add('disconnected');
+            };
+        }
+        
+        // 断开WebSocket连接
+        function disconnect() {
+            if (socket) {
+                // 发送断开连接消息
+                const disconnectMsg = {
+                    message_id: generateUUID(),
+                    message_type: 'disconnect',
+                    sender: {
+                        id: userId || 'unknown',
+                        type: 'user',
+                        name: username || '用户'
+                    },
+                    timestamp: new Date().toISOString(),
+                    payload: {},
+                    metadata: {}
+                };
+                
+                socket.send(JSON.stringify(disconnectMsg));
+                
+                // 关闭连接
+                socket.close();
+                socket = null;
+                
+                addMessage('系统', '已断开连接', 'system');
+            }
+        }
+        
+        // 发送消息
+        function sendMessage() {
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                addMessage('系统', 'WebSocket未连接', 'error');
+                return;
+            }
+            
+            const messageType = messageTypeSelect.value;
+            let message;
+            
+            switch (messageType) {
+                case 'chat':
+                    const text = messageInput.value.trim();
+                    if (!text) {
+                        addMessage('系统', '消息内容不能为空', 'error');
+                        return;
+                    }
+                    
+                    message = {
+                        message_id: generateUUID(),
+                        message_type: 'chat',
+                        sender: {
+                            id: userId || 'unknown',
+                            type: 'user',
+                            name: username || '用户'
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            text: text,
+                            group_id: groupIdInput.value.trim()
+                        },
+                        metadata: {
+                            client_info: {
+                                platform: 'web',
+                                browser: navigator.userAgent
+                            }
+                        }
+                    };
+                    break;
+                    
+                case 'ping':
+                    message = {
+                        message_id: generateUUID(),
+                        message_type: 'ping',
+                        sender: {
+                            id: userId || 'unknown',
+                            type: 'user',
+                            name: username || '用户'
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {},
+                        metadata: {}
+                    };
+                    break;
+                    
+                case 'typing':
+                    const isTyping = typingStatus.value === 'true';
+                    message = {
+                        message_id: generateUUID(),
+                        message_type: 'typing',
+                        sender: {
+                            id: userId || 'unknown',
+                            type: 'user',
+                            name: username || '用户'
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            group_id: groupIdInput.value.trim(),
+                            is_typing: isTyping
+                        },
+                        metadata: {}
+                    };
+                    break;
+                    
+                case 'read_receipt':
+                    const messageId = messageInput.value.trim();
+                    if (!messageId) {
+                        addMessage('系统', '请输入消息ID', 'error');
+                        return;
+                    }
+                    
+                    message = {
+                        message_id: generateUUID(),
+                        message_type: 'read_receipt',
+                        sender: {
+                            id: userId || 'unknown',
+                            type: 'user',
+                            name: username || '用户'
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            group_id: groupIdInput.value.trim(),
+                            message_id: messageId
+                        },
+                        metadata: {}
+                    };
+                    break;
+                    
+                default:
+                    addMessage('系统', `不支持的消息类型: ${messageType}`, 'error');
+                    return;
+            }
+            
+            // 发送消息
+            socket.send(JSON.stringify(message));
+            
+            // 清空输入框（如果不是typing类型）
+            if (messageType !== 'typing') {
+                messageInput.value = '';
+            }
+            
+            // 在消息容器中添加发送的消息（聊天消息）
+            if (messageType === 'chat') {
+                addMessage(username || '我', message.payload.text, 'sent');
+            } else if (messageType === 'typing') {
+                const status = message.payload.is_typing ? '正在输入...' : '停止输入';
+                addMessage('系统', `您已发送状态: ${status}`, 'system');
+            } else if (messageType === 'ping') {
+                addMessage('系统', '发送心跳检测', 'system');
+            } else if (messageType === 'read_receipt') {
+                addMessage('系统', `已发送已读回执，消息ID: ${message.payload.message_id}`, 'system');
+            }
+        }
+        
+        // 处理接收到的消息
+        function handleIncomingMessage(data) {
+            const messageType = data.message_type;
+            const sender = data.sender.name;
+            
+            switch (messageType) {
+                case 'system':
+                    const text = data.payload.text;
+                    addMessage('系统', text, 'system');
+                    break;
+                    
+                case 'chat':
+                    const messageText = data.payload.text;
+                    addMessage(sender, messageText, 'received');
+                    break;
+                    
+                case 'pong':
+                    addMessage('系统', '收到心跳响应', 'system');
+                    break;
+                    
+                case 'error':
+                    const errorText = data.payload.text;
+                    addMessage('错误', errorText, 'error');
+                    break;
+                    
+                case 'typing':
+                    const isTyping = data.payload.is_typing;
+                    const status = isTyping ? '正在输入...' : '停止输入';
+                    addMessage('系统', `${sender} ${status}`, 'system');
+                    break;
+                    
+                default:
+                    console.log('收到消息:', data);
+                    break;
+            }
+        }
+        
+        // 向消息容器添加消息
+        function addMessage(sender, text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const senderDiv = document.createElement('div');
+            senderDiv.className = 'message-sender';
+            senderDiv.textContent = sender;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.textContent = text;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString();
+            
+            messageDiv.appendChild(senderDiv);
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            
+            messagesContainer.appendChild(messageDiv);
+            
+            // 滚动到底部
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // 清空消息容器
+        function clearMessages() {
+            messagesContainer.innerHTML = '';
+        }
+        
+        // 生成UUID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+    </script>
+</body>
+</html> 

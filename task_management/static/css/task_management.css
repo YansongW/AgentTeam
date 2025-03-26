@@ -1,0 +1,192 @@
+/* 任务管理模块样式 */
+
+/* 任务状态标签样式 */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px;
+}
+
+.status-pending {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.status-in_progress {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.status-review {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.status-completed {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-blocked {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.status-canceled {
+    background-color: #f2f2f2;
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
+/* 优先级标签样式 */
+.priority-badge {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.priority-low {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.priority-medium {
+    background-color: #cfe2ff;
+    color: #0a58ca;
+}
+
+.priority-high {
+    background-color: #fff3cd;
+    color: #997404;
+}
+
+.priority-urgent {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* 进度条样式 */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    border-radius: 5px;
+}
+
+/* 任务表格行样式 */
+.task-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.task-item:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.task-item.selected {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* 模态框样式 */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* 标签样式 */
+.task-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+/* 截止日期样式 */
+.due-date {
+    font-size: 0.85rem;
+}
+
+.due-date.overdue {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.due-date.approaching {
+    color: #fd7e14;
+    font-weight: 600;
+}
+
+/* 卡片样式增强 */
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header {
+    border-top-left-radius: calc(0.5rem - 1px);
+    border-top-right-radius: calc(0.5rem - 1px);
+}
+
+/* 表格响应式样式调整 */
+@media (max-width: 768px) {
+    .table-responsive .table {
+        min-width: 800px;
+    }
+    
+    .task-item td {
+        vertical-align: middle;
+    }
+}
+
+/* 表单输入框获取焦点样式 */
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* 任务分配标签 */
+.assigned-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    background-color: #e9ecef;
+    color: #495057;
+    margin-right: 4px;
+}
+
+.assigned-badge.primary {
+    background-color: #cfe2ff;
+    color: #0a58ca;
+}
+
+.assigned-badge .avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+} 

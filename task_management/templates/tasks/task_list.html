@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}任务管理{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/task_management.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>任务管理</h1>
+                <button type="button" class="btn btn-primary" id="createTaskBtn">
+                    <i class="fas fa-plus"></i> 创建任务
+                </button>
+            </div>
+            
+            <!-- 过滤器 -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">筛选任务</h5>
+                </div>
+                <div class="card-body">
+                    <form id="filterForm" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="statusFilter" class="form-label">状态</label>
+                            <select id="statusFilter" class="form-select" name="status">
+                                <option value="">全部</option>
+                                <option value="pending">待处理</option>
+                                <option value="in_progress">进行中</option>
+                                <option value="review">审核中</option>
+                                <option value="completed">已完成</option>
+                                <option value="blocked">已阻塞</option>
+                                <option value="canceled">已取消</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="priorityFilter" class="form-label">优先级</label>
+                            <select id="priorityFilter" class="form-select" name="priority">
+                                <option value="">全部</option>
+                                <option value="low">低</option>
+                                <option value="medium">中</option>
+                                <option value="high">高</option>
+                                <option value="urgent">紧急</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="groupFilter" class="form-label">所属群组</label>
+                            <select id="groupFilter" class="form-select" name="group_id">
+                                <option value="">全部</option>
+                                <!-- 群组选项将通过API动态填充 -->
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="searchInput" class="form-label">搜索</label>
+                            <input type="text" class="form-control" id="searchInput" name="search" placeholder="标题、描述...">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-primary">应用筛选</button>
+                            <button type="button" class="btn btn-outline-secondary" id="resetFilterBtn">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 任务列表 -->
+            <div class="card">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">任务列表</h5>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="bulkActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                批量操作
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="bulkActionsDropdown">
+                                <li><a class="dropdown-item bulk-action" data-action="update_status" data-value="in_progress" href="#">设为进行中</a></li>
+                                <li><a class="dropdown-item bulk-action" data-action="update_status" data-value="completed" href="#">设为已完成</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item bulk-action" data-action="update_priority" data-value="high" href="#">设为高优先级</a></li>
+                                <li><a class="dropdown-item bulk-action" data-action="update_priority" data-value="medium" href="#">设为中优先级</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" id="assignSelectedBtn" href="#">分配给...</a></li>
+                                <li><a class="dropdown-item" id="addTagBtn" href="#">添加标签...</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="taskTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="40">
+                                        <input type="checkbox" class="form-check-input" id="selectAllTasks">
+                                    </th>
+                                    <th>标题</th>
+                                    <th width="120">状态</th>
+                                    <th width="120">优先级</th>
+                                    <th width="150">截止日期</th>
+                                    <th width="100">进度</th>
+                                    <th width="150">创建者</th>
+                                    <th width="160">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taskTableBody">
+                                <!-- 任务列表将通过API动态填充 -->
+                                <tr>
+                                    <td colspan="8" class="text-center py-4">加载中...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="Task pagination">
+                        <ul class="pagination justify-content-center mb-0" id="taskPagination">
+                            <!-- 分页控件将通过API动态填充 -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 创建/编辑任务模态框 -->
+<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskModalLabel">创建任务</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <input type="hidden" id="taskId" name="id">
+                    <div class="mb-3">
+                        <label for="taskTitle" class="form-label">标题 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="taskTitle" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskDescription" class="form-label">描述</label>
+                        <textarea class="form-control" id="taskDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="taskStatus" class="form-label">状态</label>
+                            <select class="form-select" id="taskStatus" name="status">
+                                <option value="pending">待处理</option>
+                                <option value="in_progress">进行中</option>
+                                <option value="review">审核中</option>
+                                <option value="completed">已完成</option>
+                                <option value="blocked">已阻塞</option>
+                                <option value="canceled">已取消</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="taskPriority" class="form-label">优先级</label>
+                            <select class="form-select" id="taskPriority" name="priority">
+                                <option value="low">低</option>
+                                <option value="medium" selected>中</option>
+                                <option value="high">高</option>
+                                <option value="urgent">紧急</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="taskType" class="form-label">任务类型</label>
+                            <select class="form-select" id="taskType" name="task_type">
+                                <option value="development">开发</option>
+                                <option value="design">设计</option>
+                                <option value="research">研究</option>
+                                <option value="writing">写作</option>
+                                <option value="analysis">分析</option>
+                                <option value="planning">规划</option>
+                                <option value="testing">测试</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="taskDueDate" class="form-label">截止日期</label>
+                            <input type="datetime-local" class="form-control" id="taskDueDate" name="due_date">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="taskGroup" class="form-label">所属群组</label>
+                            <select class="form-select" id="taskGroup" name="group">
+                                <option value="">无</option>
+                                <!-- 群组选项将通过API动态填充 -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="taskParent" class="form-label">父任务</label>
+                            <select class="form-select" id="taskParent" name="parent_task">
+                                <option value="">无</option>
+                                <!-- 父任务选项将通过API动态填充 -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskProgress" class="form-label">进度 (<span id="progressValue">0</span>%)</label>
+                        <input type="range" class="form-range" id="taskProgress" name="progress" min="0" max="100" value="0">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="taskEstimatedHours" class="form-label">预计耗时(小时)</label>
+                            <input type="number" class="form-control" id="taskEstimatedHours" name="estimated_hours" min="0" step="0.5">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="taskActualHours" class="form-label">实际耗时(小时)</label>
+                            <input type="number" class="form-control" id="taskActualHours" name="actual_hours" min="0" step="0.5">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveTaskBtn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分配任务模态框 -->
+<div class="modal fade" id="assignTaskModal" tabindex="-1" aria-labelledby="assignTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignTaskModalLabel">分配任务</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="assignTaskForm">
+                    <input type="hidden" id="assignTaskId" name="task">
+                    <div class="mb-3">
+                        <label class="form-label">分配类型</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="assignType" id="assignToUser" value="user" checked>
+                            <label class="form-check-label" for="assignToUser">
+                                分配给用户
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="assignType" id="assignToAgent" value="agent">
+                            <label class="form-check-label" for="assignToAgent">
+                                分配给代理
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3" id="userSelectContainer">
+                        <label for="assignUser" class="form-label">选择用户</label>
+                        <select class="form-select" id="assignUser" name="assigned_user">
+                            <!-- 用户选项将通过API动态填充 -->
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="agentSelectContainer">
+                        <label for="assignAgent" class="form-label">选择代理</label>
+                        <select class="form-select" id="assignAgent" name="assigned_agent">
+                            <!-- 代理选项将通过API动态填充 -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isPrimary" name="is_primary">
+                            <label class="form-check-label" for="isPrimary">
+                                主要负责人
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="assignRole" class="form-label">角色</label>
+                        <input type="text" class="form-control" id="assignRole" name="role" placeholder="开发者、设计师等">
+                    </div>
+                    <div class="mb-3">
+                        <label for="assignNotes" class="form-label">备注</label>
+                        <textarea class="form-control" id="assignNotes" name="notes" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveAssignBtn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/task_management.js' %}"></script>
+{% endblock %} 

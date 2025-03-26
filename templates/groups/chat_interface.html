@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ group.name }} - 群聊{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{% static 'groups/css/chat_interface.css' %}">
+<style>
+    /* 输入提示相关样式 */
+    .typing-indicator {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .typing-indicator span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #6c757d;
+        margin: 0 2px;
+        animation: typing 1s infinite;
+    }
+    .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    @keyframes typing {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+    
+    /* 提及菜单样式 */
+    .mention-menu {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .mention-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    .mention-item:hover, .mention-item.active {
+        background-color: #f8f9fa;
+    }
+    .mention-item img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    .mention-item .badge {
+        margin-left: 5px;
+        font-size: 0.7rem;
+    }
+
+    /* 提及样式 */
+    .mention {
+        display: inline-flex;
+        align-items: center;
+        background-color: rgba(0,123,255,0.1);
+        border-radius: 4px;
+        padding: 0 4px;
+        margin: 0 2px;
+        white-space: nowrap;
+    }
+    .agent-mention {
+        background-color: rgba(40,167,69,0.1);
+    }
+    
+    /* 代理消息样式 */
+    .agent-message {
+        border-left: 3px solid #28a745;
+    }
+    .agent-response {
+        border-left: 3px solid #17a2b8;
+        background-color: rgba(23,162,184,0.05);
+    }
+    
+    /* 规则徽章 */
+    .rule-badge {
+        margin-left: 8px;
+        font-size: 0.7rem;
+    }
+    
+    /* 回复预览样式 */
+    .reply-preview {
+        background-color: rgba(0,0,0,0.05);
+        border-left: 3px solid #6c757d;
+        padding: 6px 10px;
+        margin-bottom: 6px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .reply-preview:hover {
+        background-color: rgba(0,0,0,0.08);
+    }
+    .reply-info {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #6c757d;
+    }
+    .reply-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+    
+    /* 回复预览（输入框上方）*/
+    .reply-preview-input {
+        background-color: rgba(0,0,0,0.05);
+        border-left: 3px solid #007bff;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    
+    /* 高亮消息（用于回复导航）*/
+    .message.highlight {
+        animation: highlight-pulse 2s;
+    }
+    @keyframes highlight-pulse {
+        0% { background-color: rgba(0,123,255,0.2); }
+        100% { background-color: transparent; }
+    }
+    
+    /* 选中消息样式 */
+    .message.selected {
+        background-color: rgba(0,123,255,0.05);
+        border-left: 3px solid #007bff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row h-100">
+        <!-- 侧边栏: 显示群组信息和成员列表 -->
+        <div class="col-md-3 d-none d-md-block sidebar">
+            <div class="group-info p-3 border-bottom">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="me-2">
+                        {% if group.avatar %}
+                        <img src="{{ group.avatar.url }}" alt="{{ group.name }}" class="img-fluid rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                        {% else %}
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span>{{ group.name|slice:":1" }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h5 class="group-name mb-0">{{ group.name }}</h5>
+                        <p class="text-muted small mb-0" id="memberCount">加载中...</p>
+                    </div>
+                </div>
+                <p class="small mb-2">{{ group.description }}</p>
+                <div class="d-flex">
+                    <button type="button" class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#inviteModal">
+                        <i class="bi bi-person-plus"></i> 邀请
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="groupSettingsBtn">
+                        <i class="bi bi-gear"></i> 设置
+                    </button>
+                </div>
+            </div>
+            <div class="p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <p class="sidebar-heading mb-0">成员列表</p>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-secondary active" id="showAllMembers">全部</button>
+                        <button type="button" class="btn btn-outline-secondary" id="showOnlineMembers">在线</button>
+                    </div>
+                </div>
+                <div class="members-list" id="membersList">
+                    <!-- 成员列表将通过JavaScript动态加载 -->
+                    <div class="text-center py-3">
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <span class="ms-2">加载成员列表...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容区: 消息和输入框 -->
+        <div class="col-12 col-md-9 main-content d-flex flex-column">
+            <!-- 移动端头部 -->
+            <div class="mobile-header d-flex d-md-none align-items-center px-3 border-bottom">
+                <button class="btn btn-sm btn-link me-2" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="d-flex align-items-center">
+                    {% if group.avatar %}
+                    <img src="{{ group.avatar.url }}" alt="{{ group.name }}" class="img-fluid rounded-circle me-2" style="width: 36px; height: 36px; object-fit: cover;">
+                    {% else %}
+                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
+                        <span>{{ group.name|slice:":1" }}</span>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h6 class="mb-0">{{ group.name }}</h6>
+                        <small class="text-muted" id="mobileOnlineCount">加载中...</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 消息区域 -->
+            <div class="messages-container flex-grow-1 p-3" id="messagesContainer">
+                <div id="messagesList">
+                    <!-- 消息将通过JavaScript动态加载 -->
+                    <div class="text-center py-3 system-message">
+                        <div class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <span class="ms-2">加载消息历史...</span>
+                    </div>
+                </div>
+                
+                <!-- 正在输入状态指示器 -->
+                <div class="typing-status d-none" id="typingStatus">
+                    <div class="typing-indicator me-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span id="typingText">有人正在输入...</span>
+                </div>
+            </div>
+
+            <!-- 消息输入区域 -->
+            <div class="message-input-container p-3 border-top">
+                <div id="attachmentPreview" class="attachment-preview d-none">
+                    <!-- 附件预览将在这里显示 -->
+                </div>
+                
+                <form id="messageForm" class="message-form">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-outline-secondary" id="attachmentBtn">
+                            <i class="bi bi-paperclip"></i>
+                        </button>
+                        <input type="file" id="attachmentInput" class="d-none">
+                        
+                        <textarea 
+                            class="form-control" 
+                            id="messageInput" 
+                            placeholder="输入消息..." 
+                            rows="1"
+                            required
+                        ></textarea>
+                        
+                        <button type="button" class="btn btn-outline-secondary" id="emojiBtn">
+                            <i class="bi bi-emoji-smile"></i>
+                        </button>
+                        
+                        <button type="submit" class="btn btn-primary" id="sendBtn">
+                            <i class="bi bi-send"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提及菜单 -->
+<div class="mention-menu d-none" id="mentionMenu">
+    <!-- 提及选项将动态生成 -->
+</div>
+
+<!-- 邀请成员模态框 -->
+<div class="modal fade" id="inviteModal" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inviteModalLabel">邀请新成员</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="searchUser" class="form-label">搜索用户</label>
+                    <input type="text" class="form-control" id="searchUser" placeholder="输入用户名或邮箱">
+                </div>
+                <div id="searchResults" class="list-group mb-3">
+                    <!-- 搜索结果将在这里显示 -->
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">选择角色</label>
+                    <select class="form-select" id="memberRole">
+                        <option value="member">成员</option>
+                        <option value="admin">管理员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="inviteBtn" disabled>邀请</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图片查看模态框 -->
+<div class="modal fade" id="imageViewerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">图片查看</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" id="modalImage" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                <a href="" id="downloadImageBtn" class="btn btn-primary" download>下载</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 消息模板 -->
+<template id="messageTemplate">
+    <div class="message">
+        <div class="message-header d-flex align-items-center">
+            <div class="sender-avatar me-2">
+                <img src="" alt="">
+            </div>
+            <span class="message-sender"></span>
+            <small class="message-time ms-auto"></small>
+        </div>
+        <div class="message-content"></div>
+        <div class="message-actions mt-2 text-end">
+            <button type="button" class="btn btn-sm btn-outline-secondary reply-btn">
+                <i class="bi bi-reply"></i> 回复
+            </button>
+        </div>
+    </div>
+</template>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@3.0.8/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.0/dist/purify.min.js"></script>
+<script src="{% static 'groups/js/chat_interface.js' %}"></script>
+{% endblock %} 

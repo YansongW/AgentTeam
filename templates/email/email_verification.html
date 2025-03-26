@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot平台 - 账号激活</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Chatbot平台 - 账号激活</h2>
+        </div>
+        
+        <p>尊敬的 {{ user.username }},</p>
+        
+        <p>感谢您注册Chatbot平台！请点击下面的按钮验证您的邮箱并激活账号：</p>
+        
+        <div style="text-align: center;">
+            <a href="{{ verification_url }}" class="button">验证邮箱</a>
+        </div>
+        
+        <p>或者，您可以复制以下链接并粘贴到浏览器地址栏中：</p>
+        <p style="word-break: break-all;">{{ verification_url }}</p>
+        
+        <p>该验证链接将在24小时内有效。如果您没有注册Chatbot平台账号，请忽略此邮件。</p>
+        
+        <p>祝好，<br>Chatbot平台团队</p>
+        
+        <div class="footer">
+            <p>此邮件为系统自动发送，请勿回复。</p>
+        </div>
+    </div>
+</body>
+</html> 

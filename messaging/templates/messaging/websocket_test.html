@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebSocket 消息测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            max-width: 70%;
+        }
+        .message.sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .message.received {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        .message-info {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #fff;
+        }
+        #messageInput {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .connection-status {
+            margin-bottom: 10px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .connected {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .disconnected {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .typing-indicator {
+            font-style: italic;
+            color: #666;
+            padding: 5px 10px;
+        }
+        .controls {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .controls input, .controls select {
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSocket 消息测试</h1>
+        
+        <div class="controls">
+            <input type="text" id="roomInput" placeholder="房间名称" value="test_room">
+            <input type="text" id="usernameInput" placeholder="用户名" value="testuser">
+            <button id="connectBtn">连接</button>
+            <button id="disconnectBtn" disabled>断开</button>
+        </div>
+        
+        <div class="connection-status disconnected" id="status">
+            未连接
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2 id="roomTitle">消息测试</h2>
+            </div>
+            
+            <div class="messages" id="messagesList">
+                <!-- 消息将在这里显示 -->
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator"></div>
+            
+            <div class="input-area">
+                <input type="text" id="messageInput" placeholder="输入消息..." disabled>
+                <button id="sendBtn" disabled>发送</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let socket = null;
+        let typingTimeout = null;
+        
+        document.getElementById('connectBtn').addEventListener('click', connect);
+        document.getElementById('disconnectBtn').addEventListener('click', disconnect);
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+            
+            // 发送正在输入的状态
+            if (typingTimeout) {
+                clearTimeout(typingTimeout);
+            }
+            
+            sendTypingStatus(true);
+            
+            typingTimeout = setTimeout(() => {
+                sendTypingStatus(false);
+            }, 2000);
+        });
+        
+        function connect() {
+            const room = document.getElementById('roomInput').value;
+            const username = document.getElementById('usernameInput').value;
+            
+            if (!room || !username) {
+                alert('请输入房间名称和用户名');
+                return;
+            }
+            
+            // 创建WebSocket连接
+            const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            const wsUrl = `${wsProtocol}${window.location.host}/ws/messaging/${room}/`;
+            
+            socket = new WebSocket(wsUrl);
+            
+            socket.onopen = function(e) {
+                console.log('WebSocket连接已建立');
+                updateStatus(true);
+                
+                // 发送身份验证消息
+                const authMessage = {
+                    type: 'auth',
+                    username: username
+                };
+                socket.send(JSON.stringify(authMessage));
+                
+                // 启用消息输入和发送按钮
+                document.getElementById('messageInput').disabled = false;
+                document.getElementById('sendBtn').disabled = false;
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('disconnectBtn').disabled = false;
+                document.getElementById('roomTitle').textContent = `房间: ${room}`;
+            };
+            
+            socket.onmessage = function(e) {
+                console.log('收到消息:', e.data);
+                const data = JSON.parse(e.data);
+                
+                if (data.type === 'error') {
+                    alert(`错误: ${data.message}`);
+                    return;
+                }
+                
+                if (data.type === 'typing') {
+                    handleTypingStatus(data);
+                    return;
+                }
+                
+                if (data.type === 'message' || data.type === 'history') {
+                    displayMessage(data, username);
+                }
+            };
+            
+            socket.onclose = function(e) {
+                console.log('WebSocket连接已关闭');
+                updateStatus(false);
+                
+                // 禁用消息输入和发送按钮
+                document.getElementById('messageInput').disabled = true;
+                document.getElementById('sendBtn').disabled = true;
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+                document.getElementById('typingIndicator').textContent = '';
+            };
+            
+            socket.onerror = function(e) {
+                console.error('WebSocket错误:', e);
+                updateStatus(false);
+            };
+        }
+        
+        function disconnect() {
+            if (socket) {
+                socket.close();
+            }
+        }
+        
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message) {
+                return;
+            }
+            
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                const messageData = {
+                    type: 'message',
+                    message: message,
+                    sender: document.getElementById('usernameInput').value,
+                    timestamp: new Date().toISOString()
+                };
+                
+                socket.send(JSON.stringify(messageData));
+                messageInput.value = '';
+                
+                // 清除正在输入的状态
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                    sendTypingStatus(false);
+                }
+            }
+        }
+        
+        function sendTypingStatus(isTyping) {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                const typingData = {
+                    type: 'typing',
+                    sender: document.getElementById('usernameInput').value,
+                    is_typing: isTyping
+                };
+                
+                socket.send(JSON.stringify(typingData));
+            }
+        }
+        
+        function handleTypingStatus(data) {
+            const typingIndicator = document.getElementById('typingIndicator');
+            
+            if (data.sender !== document.getElementById('usernameInput').value) {
+                if (data.is_typing) {
+                    typingIndicator.textContent = `${data.sender} 正在输入...`;
+                } else {
+                    typingIndicator.textContent = '';
+                }
+            }
+        }
+        
+        function displayMessage(data, currentUser) {
+            const messagesList = document.getElementById('messagesList');
+            
+            // 如果是历史消息，可能有多条
+            const messages = data.type === 'history' ? data.messages : [data];
+            
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                const isSent = msg.sender === currentUser;
+                
+                messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+                
+                const messageInfo = document.createElement('div');
+                messageInfo.className = 'message-info';
+                
+                const timestamp = new Date(msg.timestamp).toLocaleTimeString();
+                messageInfo.textContent = `${msg.sender} · ${timestamp}`;
+                
+                const messageContent = document.createElement('div');
+                messageContent.textContent = msg.message;
+                
+                messageDiv.appendChild(messageInfo);
+                messageDiv.appendChild(messageContent);
+                
+                messagesList.appendChild(messageDiv);
+            });
+            
+            // 滚动到底部
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+        
+        function updateStatus(connected) {
+            const statusDiv = document.getElementById('status');
+            
+            if (connected) {
+                statusDiv.className = 'connection-status connected';
+                statusDiv.textContent = '已连接';
+            } else {
+                statusDiv.className = 'connection-status disconnected';
+                statusDiv.textContent = '未连接';
+            }
+        }
+    </script>
+</body>
+</html> 

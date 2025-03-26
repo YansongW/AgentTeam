@@ -1,0 +1,916 @@
+INFO 2025-02-27 17:14:48,436 views 用户 testuser 的账号已经是激活状态
+WARNING 2025-02-27 17:14:48,696 views 邮箱验证失败: 无效或已过期的令牌 invalid-token
+INFO 2025-02-27 17:14:48,977 views 用户 testuser 邮箱验证成功，账号已激活
+WARNING 2025-02-27 17:14:49,241 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 17:14:49,501 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 17:14:49,504 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 17:14:49,512 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 17:14:49,771 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 17:14:49,787 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:14:49,788 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:15:10,363 views 用户 testuser 的账号已经是激活状态
+WARNING 2025-02-27 17:15:10,630 views 邮箱验证失败: 无效或已过期的令牌 invalid-token
+INFO 2025-02-27 17:15:10,890 views 用户 testuser 邮箱验证成功，账号已激活
+WARNING 2025-02-27 17:15:11,156 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 17:15:11,414 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 17:15:11,417 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 17:15:11,425 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 17:15:11,688 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 17:15:11,700 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:15:11,700 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:15:36,214 serializers 创建了新用户: testuser2 (ID: 2) - 等待邮箱验证
+INFO 2025-02-27 17:15:36,222 views 验证邮件已发送到 testuser2@example.com
+INFO 2025-02-27 17:15:36,223 views 用户 testuser2 注册成功，验证邮件已发送到 testuser2@example.com
+INFO 2025-02-27 17:16:15,620 views 用户 testuser2 邮箱验证成功，账号已激活
+INFO 2025-02-27 17:16:23,250 views 用户 testuser2 的账号已经是激活状态
+INFO 2025-02-27 17:54:09,600 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 17:54:09,601 views 用户登录成功: adminuser
+INFO 2025-02-27 17:54:09,640 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 17:54:09,641 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 17:54:10,427 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 17:54:10,427 views 用户登录成功: adminuser
+INFO 2025-02-27 17:54:10,430 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 17:54:10,431 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 17:54:11,266 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 17:54:11,266 views 用户登录成功: normaluser
+INFO 2025-02-27 17:54:11,268 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 17:54:12,080 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 17:54:12,080 views 用户登录成功: normaluser
+WARNING 2025-02-27 17:54:12,081 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 17:54:12,082 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 17:54:12,084 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 17:54:12,084 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 17:54:12,887 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 17:54:12,887 views 用户登录成功: normaluser
+WARNING 2025-02-27 17:54:12,889 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 17:54:12,890 utils API错误: {'error': {'detail': ErrorDetail(string='您只能操作自己的资源', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 17:54:13,702 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 17:54:13,703 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 17:54:14,232 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 17:54:14,233 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 17:54:14,765 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 17:54:14,765 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 17:54:15,034 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 17:54:15,035 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 17:54:15,303 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 17:54:15,304 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 17:54:15,305 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:15,577 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:15,847 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:16,121 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:16,662 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:17,195 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:17,730 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:18,266 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:18,538 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:18,806 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:19,070 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 17:54:19,347 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 17:54:19,623 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 17:54:19,626 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 17:54:19,636 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 17:54:19,907 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 17:54:19,919 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:54:19,920 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+WARNING 2025-02-27 17:56:03,122 views 邮箱验证失败: 无效或已过期的令牌 clw9tf-7e8e01c2939e85e885badc2223ac01fe
+WARNING 2025-02-27 17:56:03,403 views 邮箱验证失败: 无效或已过期的令牌 invalid-token
+WARNING 2025-02-27 17:56:03,675 views 邮箱验证失败: 无效或已过期的令牌 clw9tf-2aea4040dd26857e536ed2790d932407
+WARNING 2025-02-27 17:56:11,600 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 17:56:11,870 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 17:56:11,874 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 17:56:11,883 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 17:56:12,166 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 17:56:12,180 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 17:56:12,181 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:02:02,109 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:02,110 views 用户登录成功: adminuser
+INFO 2025-02-27 18:02:02,146 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:02:02,148 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:02:02,911 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:02,911 views 用户登录成功: adminuser
+INFO 2025-02-27 18:02:02,914 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:02:02,916 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:02:03,684 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:03,684 views 用户登录成功: normaluser
+INFO 2025-02-27 18:02:03,686 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:02:04,462 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:04,462 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:02:04,464 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:02:04,464 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:02:04,465 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:02:04,466 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:02:05,231 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:05,231 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:02:05,233 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 18:02:05,234 utils API错误: {'error': {'detail': ErrorDetail(string='您只能操作自己的资源', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:02:05,743 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 18:02:05,744 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:02:06,252 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:06,253 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:02:06,764 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:06,765 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:02:07,021 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:07,022 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 18:02:07,283 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:07,284 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 18:02:07,539 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:07,539 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 18:02:07,792 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:02:07,793 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 18:02:07,793 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 18:02:07,794 views IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+INFO 2025-02-27 18:02:08,305 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:08,305 views 用户登录成功: loginuser
+INFO 2025-02-27 18:02:08,837 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:08,838 views 用户登录成功: loginuser
+INFO 2025-02-27 18:02:09,342 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:09,343 views 用户登录成功: loginuser
+INFO 2025-02-27 18:02:10,106 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:10,107 views 用户登录成功: adminuser
+WARNING 2025-02-27 18:02:10,109 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-27 18:02:10,941 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:10,942 views 用户登录成功: adminuser
+INFO 2025-02-27 18:02:10,944 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:02:11,718 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:11,718 views 用户登录成功: adminuser
+INFO 2025-02-27 18:02:11,720 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-27 18:02:11,722 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-27 18:02:12,498 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:12,499 views 用户登录成功: adminuser
+INFO 2025-02-27 18:02:12,501 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-27 18:02:12,503 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-27 18:02:13,016 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:13,016 views 用户登录成功: profileuser
+INFO 2025-02-27 18:02:13,536 views 用户 profileuser 成功修改了密码
+INFO 2025-02-27 18:02:14,050 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:14,051 views 用户登录成功: profileuser
+INFO 2025-02-27 18:02:14,557 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:14,558 views 用户登录成功: profileuser
+WARNING 2025-02-27 18:02:14,817 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-27 18:02:15,591 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:02:15,592 views 用户登录成功: profileuser
+INFO 2025-02-27 18:02:15,596 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-27 18:02:15,857 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 18:02:16,117 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 18:02:16,120 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 18:02:16,122 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 18:02:16,379 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 18:02:16,389 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:02:16,390 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:06:44,109 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:44,109 views 用户登录成功: adminuser
+INFO 2025-02-27 18:06:44,144 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:06:44,922 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:44,922 views 用户登录成功: adminuser
+INFO 2025-02-27 18:06:44,925 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:06:44,927 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:06:45,688 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:45,688 views 用户登录成功: normaluser
+INFO 2025-02-27 18:06:45,691 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:06:46,466 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:46,466 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:06:46,468 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:06:46,469 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:06:46,470 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:06:46,470 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:06:47,238 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:47,239 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:06:47,243 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 18:06:47,243 views 获取用户资料时出错: 您只能操作自己的资源
+WARNING 2025-02-27 18:06:48,012 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:06:48,012 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 18:06:48,535 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:06:48,535 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:49,055 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:06:49,056 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:49,313 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 18:06:49,314 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:49,574 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 18:06:49,574 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:49,832 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 18:06:49,832 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:50,089 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 18:06:50,089 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 18:06:50,090 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:06:50,091 views IP 127.0.0.1 登录尝试次数过多，请求被拒绝
+INFO 2025-02-27 18:06:50,613 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:50,614 views 用户登录成功: loginuser
+WARNING 2025-02-27 18:06:50,886 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:06:50,886 views 登录失败，无效的凭据: login@example.com
+INFO 2025-02-27 18:06:51,405 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:51,406 views 用户登录成功: loginuser
+INFO 2025-02-27 18:06:52,182 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:52,183 views 用户登录成功: adminuser
+WARNING 2025-02-27 18:06:52,185 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-27 18:06:52,965 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:52,967 views 用户登录成功: adminuser
+INFO 2025-02-27 18:06:52,969 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:06:53,751 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:53,752 views 用户登录成功: adminuser
+INFO 2025-02-27 18:06:53,754 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-27 18:06:53,757 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-27 18:06:54,542 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:54,542 views 用户登录成功: adminuser
+INFO 2025-02-27 18:06:54,545 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-27 18:06:54,547 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-27 18:06:55,070 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:55,071 views 用户登录成功: profileuser
+INFO 2025-02-27 18:06:55,598 views 用户 profileuser 成功修改了密码
+INFO 2025-02-27 18:06:56,117 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:56,118 views 用户登录成功: profileuser
+INFO 2025-02-27 18:06:56,655 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:56,656 views 用户登录成功: profileuser
+WARNING 2025-02-27 18:06:56,921 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-27 18:06:57,711 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:06:57,712 views 用户登录成功: profileuser
+INFO 2025-02-27 18:06:57,715 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-27 18:06:57,985 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 18:06:58,244 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 18:06:58,247 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 18:06:58,250 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 18:06:58,516 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 18:06:58,525 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:06:58,526 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:09:12,643 views 用户 testuser 完成邮箱验证，账号已激活
+INFO 2025-02-27 18:09:13,418 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:13,419 views 用户登录成功: adminuser
+INFO 2025-02-27 18:09:13,455 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:09:13,456 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:09:14,226 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:14,227 views 用户登录成功: adminuser
+INFO 2025-02-27 18:09:14,229 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:09:14,230 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:09:14,993 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:14,994 views 用户登录成功: normaluser
+INFO 2025-02-27 18:09:14,996 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:09:15,766 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:15,767 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:09:15,769 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:09:15,769 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:09:15,771 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:09:15,771 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:09:16,552 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:16,552 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:09:16,554 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 18:09:16,555 views 获取用户资料时出错: 您只能操作自己的资源
+INFO 2025-02-27 18:09:17,078 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:17,079 views 用户登录成功: tokenuser
+INFO 2025-02-27 18:09:17,597 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:17,598 views 用户登录成功: tokenuser
+WARNING 2025-02-27 18:09:18,365 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:09:18,366 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 18:09:18,880 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:09:18,881 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:19,407 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:09:19,407 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:19,665 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 18:09:19,666 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:19,927 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 18:09:19,928 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:20,194 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 18:09:20,195 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:20,454 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 18:09:20,454 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 18:09:20,454 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:09:20,455 views IP 127.0.0.1 登录尝试次数过多，请求被拒绝
+INFO 2025-02-27 18:09:20,988 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:20,989 views 用户登录成功: loginuser
+WARNING 2025-02-27 18:09:21,276 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:09:21,277 views 登录失败，无效的凭据: login@example.com
+INFO 2025-02-27 18:09:21,792 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:21,792 views 用户登录成功: loginuser
+INFO 2025-02-27 18:09:22,573 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:22,574 views 用户登录成功: adminuser
+WARNING 2025-02-27 18:09:22,576 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-27 18:09:23,345 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:23,346 views 用户登录成功: adminuser
+INFO 2025-02-27 18:09:23,349 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:09:24,118 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:24,119 views 用户登录成功: adminuser
+INFO 2025-02-27 18:09:24,121 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-27 18:09:24,123 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-27 18:09:24,896 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:24,897 views 用户登录成功: adminuser
+INFO 2025-02-27 18:09:24,900 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-27 18:09:24,902 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-27 18:09:25,420 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:25,421 views 用户登录成功: profileuser
+INFO 2025-02-27 18:09:25,943 views 用户 profileuser 成功修改了密码
+INFO 2025-02-27 18:09:26,462 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:26,463 views 用户登录成功: profileuser
+INFO 2025-02-27 18:09:26,975 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:26,976 views 用户登录成功: profileuser
+WARNING 2025-02-27 18:09:27,232 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-27 18:09:28,003 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:09:28,003 views 用户登录成功: profileuser
+INFO 2025-02-27 18:09:28,005 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-27 18:09:28,279 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 18:09:28,539 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 18:09:28,543 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 18:09:28,545 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 18:09:28,797 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 18:09:28,810 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:09:28,810 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:12:34,098 views 用户 testuser 完成邮箱验证，账号已激活
+INFO 2025-02-27 18:12:34,897 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:34,928 views 用户登录成功: adminuser
+INFO 2025-02-27 18:12:34,930 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:12:34,932 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:12:35,715 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:35,716 views 用户登录成功: adminuser
+INFO 2025-02-27 18:12:36,514 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:36,515 views 用户登录成功: normaluser
+INFO 2025-02-27 18:12:37,313 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:37,314 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:12:37,316 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:12:37,316 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:12:37,318 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:12:37,318 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:12:38,104 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:38,105 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:12:38,107 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 18:12:38,108 views 获取用户资料时出错: 您只能操作自己的资源
+INFO 2025-02-27 18:12:38,638 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:38,639 views 用户登录成功: tokenuser
+ERROR 2025-02-27 18:12:38,643 utils API错误: {'error': {'detail': ErrorDetail(string='Token is invalid', code='token_not_valid'), 'code': ErrorDetail(string='token_not_valid', code='token_not_valid')}, 'code': 401}
+INFO 2025-02-27 18:12:39,182 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:39,183 views 用户登录成功: tokenuser
+WARNING 2025-02-27 18:12:39,980 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:12:39,980 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 18:12:40,779 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:12:40,779 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:41,565 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:12:41,566 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:41,833 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 18:12:41,833 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:42,094 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 18:12:42,095 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:42,368 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 18:12:42,368 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:42,640 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 18:12:42,640 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 18:12:42,641 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:12:42,641 views IP 127.0.0.1 登录尝试次数过多，请求被拒绝
+INFO 2025-02-27 18:12:43,444 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:43,445 views 用户登录成功: loginuser
+INFO 2025-02-27 18:12:44,234 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:44,235 views 用户登录成功: loginuser
+INFO 2025-02-27 18:12:45,034 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:45,035 views 用户登录成功: loginuser
+INFO 2025-02-27 18:12:45,807 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:45,809 views 用户登录成功: adminuser
+WARNING 2025-02-27 18:12:45,811 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-27 18:12:46,591 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:46,592 views 用户登录成功: adminuser
+INFO 2025-02-27 18:12:46,594 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:12:47,386 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:47,388 views 用户登录成功: adminuser
+INFO 2025-02-27 18:12:47,390 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-27 18:12:47,392 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-27 18:12:48,184 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:48,186 views 用户登录成功: adminuser
+INFO 2025-02-27 18:12:48,188 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-27 18:12:48,191 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-27 18:12:48,710 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:48,711 views 用户登录成功: profileuser
+INFO 2025-02-27 18:12:49,263 views 用户 profileuser 成功修改了密码
+INFO 2025-02-27 18:12:49,781 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:49,782 views 用户登录成功: profileuser
+INFO 2025-02-27 18:12:50,305 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:50,306 views 用户登录成功: profileuser
+WARNING 2025-02-27 18:12:50,567 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-27 18:12:51,366 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:12:51,367 views 用户登录成功: profileuser
+INFO 2025-02-27 18:12:51,372 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-27 18:12:51,639 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 18:12:51,910 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 18:12:51,913 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 18:12:51,915 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 18:12:52,187 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 18:12:52,197 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:12:52,197 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:13:24,817 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:24,851 views 用户登录成功: loginuser
+INFO 2025-02-27 18:13:33,045 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:33,078 views 用户登录成功: adminuser
+INFO 2025-02-27 18:13:33,080 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:13:33,081 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:13:33,876 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:33,877 views 用户登录成功: adminuser
+INFO 2025-02-27 18:13:33,879 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:13:33,881 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:13:34,677 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:34,677 views 用户登录成功: normaluser
+INFO 2025-02-27 18:13:34,679 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:13:35,481 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:35,482 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:13:35,484 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:13:35,485 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:13:35,486 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:13:35,486 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:13:36,286 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:13:36,287 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:13:36,289 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+ERROR 2025-02-27 18:13:36,290 views 获取用户资料时出错: 您只能操作自己的资源
+INFO 2025-02-27 18:14:09,638 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:09,669 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:09,672 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:14:09,674 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:14:10,530 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:10,531 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:10,533 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:14:10,535 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:14:11,322 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:11,323 views 用户登录成功: normaluser
+INFO 2025-02-27 18:14:11,324 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:14:12,129 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:12,130 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:14:12,131 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:14:12,132 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:14:12,133 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:14:12,133 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:14:13,031 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:13,032 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:14:13,034 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+INFO 2025-02-27 18:14:22,834 views 用户 testuser 完成邮箱验证，账号已激活
+INFO 2025-02-27 18:14:23,621 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:23,652 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:23,655 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:14:23,656 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-27 18:14:24,450 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:24,451 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:24,454 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-27 18:14:24,455 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:14:25,241 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:25,242 views 用户登录成功: normaluser
+INFO 2025-02-27 18:14:25,245 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-27 18:14:26,041 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:26,042 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:14:26,044 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-27 18:14:26,044 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-27 18:14:26,045 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-27 18:14:26,046 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-27 18:14:26,823 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:26,825 views 用户登录成功: normaluser
+WARNING 2025-02-27 18:14:26,826 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+INFO 2025-02-27 18:14:27,343 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:27,344 views 用户登录成功: tokenuser
+ERROR 2025-02-27 18:14:27,346 utils API错误: {'error': {'detail': ErrorDetail(string='Token is invalid', code='token_not_valid'), 'code': ErrorDetail(string='token_not_valid', code='token_not_valid')}, 'code': 401}
+INFO 2025-02-27 18:14:27,876 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:27,878 views 用户登录成功: tokenuser
+WARNING 2025-02-27 18:14:28,668 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:14:28,669 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-27 18:14:29,469 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:14:29,469 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:30,278 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-27 18:14:30,278 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:30,554 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-27 18:14:30,554 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:30,823 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-27 18:14:30,823 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:31,112 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-27 18:14:31,112 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:31,379 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-27 18:14:31,380 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-27 18:14:31,380 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-27 18:14:31,381 views IP 127.0.0.1 登录尝试次数过多，请求被拒绝
+INFO 2025-02-27 18:14:32,176 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:32,177 views 用户登录成功: loginuser
+INFO 2025-02-27 18:14:32,976 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:32,977 views 用户登录成功: loginuser
+INFO 2025-02-27 18:14:33,764 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:33,764 views 用户登录成功: loginuser
+INFO 2025-02-27 18:14:34,572 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:34,573 views 用户登录成功: adminuser
+WARNING 2025-02-27 18:14:34,576 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-27 18:14:35,384 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:35,385 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:35,386 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-27 18:14:36,190 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:36,191 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:36,193 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-27 18:14:36,196 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-27 18:14:36,975 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:36,976 views 用户登录成功: adminuser
+INFO 2025-02-27 18:14:36,979 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-27 18:14:36,980 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-27 18:14:37,507 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:37,508 views 用户登录成功: profileuser
+INFO 2025-02-27 18:14:38,053 views 用户 profileuser 成功修改了密码
+INFO 2025-02-27 18:14:38,576 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:38,577 views 用户登录成功: profileuser
+INFO 2025-02-27 18:14:39,113 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:39,113 views 用户登录成功: profileuser
+WARNING 2025-02-27 18:14:39,379 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-27 18:14:40,212 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-27 18:14:40,213 views 用户登录成功: profileuser
+INFO 2025-02-27 18:14:40,215 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-27 18:14:40,491 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-27 18:14:40,752 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-27 18:14:40,754 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-27 18:14:40,757 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-27 18:14:41,028 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-27 18:14:41,039 views 验证邮件已发送到 test@example.com
+INFO 2025-02-27 18:14:41,040 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+WARNING 2025-02-28 10:54:09,108 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 10:54:09,109 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 10:54:09,750 views 用户 apiuser 创建了新代理 '新测试代理'
+WARNING 2025-02-28 11:02:37,390 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 11:02:37,391 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 11:02:38,019 views 用户 apiuser 创建了新代理 '新测试代理'
+WARNING 2025-02-28 12:42:51,697 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 12:42:51,697 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 12:42:53,776 views 用户 apiuser 创建了新代理 '新测试代理'
+WARNING 2025-02-28 12:44:49,572 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 12:44:49,573 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 12:44:50,103 views 用户 apiuser 向代理 '用户的代理' 发送消息: 你好，我需要一个前端页面设计...
+INFO 2025-02-28 12:44:51,693 views 用户 apiuser 创建了新代理 '新测试代理'
+WARNING 2025-02-28 12:45:02,235 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 12:45:02,236 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 12:45:02,778 views 用户 apiuser 向代理 '用户的代理' 发送消息: 你好，我需要一个前端页面设计...
+INFO 2025-02-28 12:45:04,379 views 用户 apiuser 创建了新代理 '新测试代理'
+INFO 2025-02-28 12:45:07,898 views 用户 testuser 完成邮箱验证，账号已激活
+INFO 2025-02-28 12:45:08,719 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:08,802 views 用户登录成功: adminuser
+INFO 2025-02-28 12:45:08,804 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-28 12:45:08,805 views 管理员 adminuser 查看了被锁定的IP列表
+INFO 2025-02-28 12:45:09,622 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:09,623 views 用户登录成功: adminuser
+INFO 2025-02-28 12:45:09,626 views 用户 adminuser 查看了用户 adminuser 的个人资料
+INFO 2025-02-28 12:45:09,627 views 用户 adminuser 查看了用户 normaluser 的个人资料
+INFO 2025-02-28 12:45:10,447 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:10,448 views 用户登录成功: normaluser
+INFO 2025-02-28 12:45:10,450 views 用户 normaluser 查看了用户 normaluser 的个人资料
+INFO 2025-02-28 12:45:11,259 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:11,260 views 用户登录成功: normaluser
+WARNING 2025-02-28 12:45:11,262 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/users/
+ERROR 2025-02-28 12:45:11,263 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+WARNING 2025-02-28 12:45:11,264 permissions 用户 normaluser 尝试访问仅限管理员的资源: /api/users/admin/login-attempts/
+ERROR 2025-02-28 12:45:11,264 utils API错误: {'error': {'detail': ErrorDetail(string='此操作需要管理员权限', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 12:45:12,074 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:12,075 views 用户登录成功: normaluser
+WARNING 2025-02-28 12:45:12,077 permissions 用户 normaluser 尝试访问不属于自己的资源: adminuser
+INFO 2025-02-28 12:45:12,616 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:12,617 views 用户登录成功: tokenuser
+ERROR 2025-02-28 12:45:12,620 utils API错误: {'error': {'detail': ErrorDetail(string='Token is invalid', code='token_not_valid'), 'code': ErrorDetail(string='token_not_valid', code='token_not_valid')}, 'code': 401}
+INFO 2025-02-28 12:45:13,155 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:13,156 views 用户登录成功: tokenuser
+WARNING 2025-02-28 12:45:13,962 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-28 12:45:13,963 views 非激活用户尝试登录: inactiveuser
+WARNING 2025-02-28 12:45:14,765 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-28 12:45:14,766 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:15,587 utils IP 127.0.0.1 登录失败，当前尝试次数: 1
+WARNING 2025-02-28 12:45:15,588 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:15,851 utils IP 127.0.0.1 登录失败，当前尝试次数: 2
+WARNING 2025-02-28 12:45:15,851 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:16,122 utils IP 127.0.0.1 登录失败，当前尝试次数: 3
+WARNING 2025-02-28 12:45:16,122 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:16,388 utils IP 127.0.0.1 登录失败，当前尝试次数: 4
+WARNING 2025-02-28 12:45:16,388 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:16,656 utils IP 127.0.0.1 登录失败，当前尝试次数: 5
+WARNING 2025-02-28 12:45:16,656 utils IP 127.0.0.1 登录尝试次数过多，已被临时阻止
+WARNING 2025-02-28 12:45:16,657 views 登录失败，无效的凭据: loginuser
+WARNING 2025-02-28 12:45:16,657 views IP 127.0.0.1 登录尝试次数过多，请求被拒绝
+INFO 2025-02-28 12:45:17,445 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:17,446 views 用户登录成功: loginuser
+INFO 2025-02-28 12:45:18,254 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:18,255 views 用户登录成功: loginuser
+INFO 2025-02-28 12:45:19,086 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:19,087 views 用户登录成功: loginuser
+INFO 2025-02-28 12:45:19,907 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:19,908 views 用户登录成功: adminuser
+WARNING 2025-02-28 12:45:19,910 views 管理员 adminuser 尝试修改自己的账户状态
+INFO 2025-02-28 12:45:20,705 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:20,706 views 用户登录成功: adminuser
+INFO 2025-02-28 12:45:20,708 views 管理员 adminuser 查看了用户列表
+INFO 2025-02-28 12:45:21,508 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:21,509 views 用户登录成功: adminuser
+INFO 2025-02-28 12:45:21,511 views 管理员 adminuser 将用户 testuser 的角色更新为 admin
+INFO 2025-02-28 12:45:21,513 views 管理员 adminuser 将用户 testuser 的角色更新为 user
+INFO 2025-02-28 12:45:22,305 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:22,306 views 用户登录成功: adminuser
+INFO 2025-02-28 12:45:22,308 views 管理员 adminuser 禁用了用户 testuser
+INFO 2025-02-28 12:45:22,312 views 管理员 adminuser 激活了用户 testuser
+INFO 2025-02-28 12:45:22,847 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:22,849 views 用户登录成功: profileuser
+INFO 2025-02-28 12:45:23,393 views 用户 profileuser 成功修改了密码
+INFO 2025-02-28 12:45:23,939 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:23,940 views 用户登录成功: profileuser
+INFO 2025-02-28 12:45:24,478 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:24,479 views 用户登录成功: profileuser
+WARNING 2025-02-28 12:45:24,750 views 用户 profileuser 提供了错误的当前密码
+INFO 2025-02-28 12:45:25,554 utils IP 127.0.0.1 登录成功，已重置尝试次数
+INFO 2025-02-28 12:45:25,555 views 用户登录成功: profileuser
+INFO 2025-02-28 12:45:25,558 views 用户 profileuser 更新了个人资料: {'bio': '这是一段个人简介', 'avatar': 'https://example.com/avatar.jpg'}
+WARNING 2025-02-28 12:45:25,830 views 用户注册失败: {'email': [ErrorDetail(string='具有 电子邮箱 的 用户 已存在。', code='unique')]}
+WARNING 2025-02-28 12:45:26,100 views 用户注册失败: {'username': [ErrorDetail(string='已存在一位使用该名字的用户。', code='unique')]}
+WARNING 2025-02-28 12:45:26,103 views 用户注册失败: {'password2': [ErrorDetail(string='两次输入的密码不一致', code='invalid')]}
+WARNING 2025-02-28 12:45:26,105 views 用户注册失败: {'non_field_errors': [ErrorDetail(string='密码长度太短。密码必须包含至少 8 个字符。', code='password_too_short'), ErrorDetail(string='这个密码太常见了。', code='password_too_common'), ErrorDetail(string='密码只包含数字。', code='password_entirely_numeric'), ErrorDetail(string='密码长度至少为8个字符', code='invalid')]}
+INFO 2025-02-28 12:45:26,379 serializers 创建了新用户: testuser (ID: 1) - 等待邮箱验证
+INFO 2025-02-28 12:45:26,392 views 验证邮件已发送到 test@example.com
+INFO 2025-02-28 12:45:26,393 views 用户 testuser 注册成功，验证邮件已发送到 test@example.com
+WARNING 2025-02-28 13:21:51,154 permissions 用户 apiuser 尝试访问非自己拥有的代理 公开代理 (助手)，访问被拒绝。
+ERROR 2025-02-28 13:21:51,155 utils API错误: {'error': {'detail': ErrorDetail(string='您没有执行该操作的权限。', code='permission_denied')}, 'code': 403}
+INFO 2025-02-28 13:21:51,714 views 用户 apiuser 向代理 '用户的代理' 发送消息: 你好，我需要一个前端页面设计...
+INFO 2025-02-28 13:21:53,356 views 用户 apiuser 创建了新代理 '新测试代理'
+INFO 2025-03-06 10:13:20,461 autoreload Watching for file changes with StatReloader
+INFO 2025-03-06 10:13:26,528 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-06 10:13:26,574 basehttp "GET /api/groups/management/ HTTP/1.1" 200 11941
+INFO 2025-03-06 10:13:26,745 basehttp "GET /static/groups/css/group_management.css HTTP/1.1" 200 1
+INFO 2025-03-06 10:13:26,745 basehttp "GET /static/groups/js/group_management.js HTTP/1.1" 200 15471
+WARNING 2025-03-06 10:13:26,941 basehttp "GET /api/groups/groups/?is_owner=true HTTP/1.1" 401 154
+WARNING 2025-03-06 10:13:26,968 basehttp "GET /api/agents/agents/ HTTP/1.1" 401 154
+WARNING 2025-03-06 10:13:27,731 basehttp "GET /favicon.ico HTTP/1.1" 404 4176
+INFO 2025-03-06 10:13:33,694 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-03-06 10:13:33,697 basehttp "GET /api/groups/management/ HTTP/1.1" 200 11941
+WARNING 2025-03-06 10:13:33,727 basehttp "GET /api/groups/groups/?is_owner=true HTTP/1.1" 401 154
+WARNING 2025-03-06 10:13:33,728 basehttp "GET /api/agents/agents/ HTTP/1.1" 401 154
+INFO 2025-03-25 14:46:15,002 async_processor 异步消息处理器已启动
+INFO 2025-03-25 14:46:15,002 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 14:46:15,003 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 14:56:15,139 async_processor 异步消息处理器已启动
+INFO 2025-03-25 14:56:15,140 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 14:56:15,140 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 14:56:22,449 async_processor 异步消息处理器已启动
+INFO 2025-03-25 14:56:22,449 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 14:56:22,450 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:39:36,992 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:39:36,993 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:39:36,993 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:40:09,669 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:40:09,670 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:40:09,670 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:40:32,179 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:40:32,180 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:40:32,180 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:40:56,846 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:40:56,847 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:40:56,847 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:41:26,182 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:41:26,183 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:41:26,183 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:42:15,974 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:42:15,975 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:42:15,975 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:42:51,326 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:42:51,326 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:42:51,326 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 15:44:58,167 async_processor 异步消息处理器已启动
+INFO 2025-03-25 15:44:58,168 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 15:44:58,168 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:33:47,133 async_processor 异步消息处理器已启动
+INFO 2025-03-25 18:33:47,134 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 18:33:47,134 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:33:59,078 async_processor 异步消息处理器已启动
+INFO 2025-03-25 18:33:59,079 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 18:33:59,079 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:34:25,194 async_processor 异步消息处理器已启动
+INFO 2025-03-25 18:34:25,194 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 18:34:25,195 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:34:36,869 async_processor 异步消息处理器已启动
+INFO 2025-03-25 18:34:36,870 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 18:34:36,870 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:34:52,115 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:52,434 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:52,737 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:53,047 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:53,369 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:53,682 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:53,683 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:34:53,686 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:34:53,988 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:53,989 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:34:53,991 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:34:54,304 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:54,304 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:34:54,305 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:34:54,623 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:54,624 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:34:54,625 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:34:54,927 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:54,929 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:34:55,239 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:55,240 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:34:55,545 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:34:55,546 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:17,420 async_processor 异步消息处理器已启动
+INFO 2025-03-25 18:36:17,421 async_processor 异步消息处理器已初始化
+INFO 2025-03-25 18:36:17,421 handlers 已注册所有响应类型处理函数
+INFO 2025-03-25 18:36:28,684 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:28,803 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:29,220 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:29,221 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:29,609 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:29,611 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:30,000 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:30,001 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:30,399 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:30,400 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:30,803 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:30,805 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:36:30,805 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:36:31,193 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:31,194 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:36:31,195 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:36:31,706 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:31,709 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:36:31,709 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:36:32,164 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:32,164 signals 新代理已创建: Test Agent (ID: 1)
+ERROR 2025-03-25 18:36:32,165 signals 处理代理保存信号时出错: 'Agent' object has no attribute 'is_active'
+Traceback (most recent call last):
+  File "C:\Users\77161\Desktop\Agent\agents\signals.py", line 25, in agent_saved
+    if not instance.is_active:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Agent' object has no attribute 'is_active'
+INFO 2025-03-25 18:36:32,570 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:32,571 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:32,963 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:32,964 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-25 18:36:33,305 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-25 18:36:33,306 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:15,794 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:15,955 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:16,418 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:16,419 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:16,791 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:16,792 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:17,202 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:17,204 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:17,727 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:17,729 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:18,155 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:18,156 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:18:18,588 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:18,589 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:18:19,063 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:19,064 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:18:19,513 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:19,515 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:18:19,987 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:19,988 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:20,431 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:20,431 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:18:20,838 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:18:20,839 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:35,970 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:36,145 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:36,627 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:36,629 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:37,059 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:37,061 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:37,477 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:37,477 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:38,042 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:38,045 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:38,637 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:38,639 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:19:39,208 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:39,209 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:19:39,840 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:39,842 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:19:40,506 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:40,509 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:19:41,129 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:41,131 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:41,671 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:41,672 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:42,201 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:42,202 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:19:55,479 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:19:55,618 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:20:29,375 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:20:29,744 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:21:01,221 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:21:01,402 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:21:51,374 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:21:51,496 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:21:51,497 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:04,499 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:04,654 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:04,655 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:05,203 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:05,205 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:05,206 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:05,684 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:05,687 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:05,687 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:06,219 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:06,221 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:06,222 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:06,944 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:06,947 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:06,948 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:22:43,498 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:22:43,663 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:22:43,665 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:23:28,081 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:23:28,275 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:23:28,278 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:04,997 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:05,149 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:05,150 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:05,604 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:05,606 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:05,607 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:06,009 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:06,010 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:06,011 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:06,401 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:06,403 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:06,404 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:06,813 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:06,815 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:06,815 signals 成员 testuser 已加入群组 Test Group (角色: admin)
+INFO 2025-03-26 09:36:07,207 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:07,207 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:36:07,531 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:07,532 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:36:07,872 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:07,873 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:36:08,219 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:08,221 signals 新代理已创建: Test Agent (ID: 1)
+INFO 2025-03-26 09:36:08,557 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:08,558 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:08,896 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:08,897 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:09,244 signals 新用户已创建: testuser (ID: 1)
+INFO 2025-03-26 09:36:09,245 signals 新群组已创建: Test Group (ID: 1)
+INFO 2025-03-26 09:36:30,231 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:36:30,232 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:36:30,232 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:36:53,801 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:36:53,802 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:36:53,803 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:36:54,999 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:36:55,000 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:36:55,000 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:36:55,012 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 09:52:10,835 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:52:10,836 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:52:10,837 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:52:12,124 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:52:12,125 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:52:12,125 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:52:12,137 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 09:52:50,131 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:52:50,131 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:52:50,133 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:52:59,429 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:52:59,429 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:52:59,430 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:53:00,606 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:53:00,606 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:53:00,606 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:53:00,618 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 09:53:24,923 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:53:24,924 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:53:24,925 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:53:46,949 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:53:46,950 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:53:46,951 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:54:04,306 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:54:04,307 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:54:04,307 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:54:05,614 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:54:05,614 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:54:05,615 handlers 已注册所有响应类型处理函数
+INFO 2025-03-26 09:54:05,628 autoreload Watching for file changes with StatReloader
+INFO 2025-03-26 09:54:12,895 async_processor 异步消息处理器已启动
+INFO 2025-03-26 09:54:12,895 async_processor 异步消息处理器已初始化
+INFO 2025-03-26 09:54:12,895 handlers 已注册所有响应类型处理函数

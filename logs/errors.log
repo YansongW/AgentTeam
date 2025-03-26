@@ -1,0 +1,39 @@
+ERROR 2025-03-06 10:13:26,940 error_utils [SYS_INT_001] API异常: NotAuthenticated
+ERROR 2025-03-06 10:13:26,967 error_utils [SYS_INT_001] API异常: NotAuthenticated
+ERROR 2025-03-06 10:13:33,726 error_utils [SYS_INT_001] API异常: NotAuthenticated
+ERROR 2025-03-06 10:13:33,726 error_utils [SYS_INT_001] API异常: NotAuthenticated
+ERROR 2025-03-25 18:36:28,848 error_utils [SYS_INT_001] API异常: ValidationError
+ERROR 2025-03-25 18:36:29,233 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-25 18:36:29,233 log Internal Server Error: /tasks/tasks/45253cd1-6880-44e6-b660-81157ebf3c9e/
+ERROR 2025-03-25 18:36:29,615 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-25 18:36:29,615 log Internal Server Error: /tasks/tasks/49c33e12-d994-4422-929c-9a18e80a6c37/
+ERROR 2025-03-25 18:36:30,005 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-25 18:36:30,006 log Internal Server Error: /tasks/tasks/
+ERROR 2025-03-25 18:36:30,405 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-25 18:36:30,405 log Internal Server Error: /tasks/tasks/f0c05f3b-dbfe-4870-b29b-a98e90b7fb77/
+ERROR 2025-03-26 09:18:16,006 error_utils [SYS_INT_001] API异常: ValidationError
+ERROR 2025-03-26 09:18:16,427 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:18:16,428 log Internal Server Error: /tasks/tasks/1d3cf78a-447c-47e1-8cde-eec5e134bc9b/
+ERROR 2025-03-26 09:18:16,797 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:18:16,797 log Internal Server Error: /tasks/tasks/a0e5032c-ca66-4eda-9bb5-ede4edef87f5/
+ERROR 2025-03-26 09:18:17,208 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:18:17,209 log Internal Server Error: /tasks/tasks/
+ERROR 2025-03-26 09:18:17,735 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:18:17,735 log Internal Server Error: /tasks/tasks/1565b8d1-9339-418d-8295-34dd2422b3f6/
+ERROR 2025-03-26 09:19:36,207 error_utils [SYS_INT_001] API异常: ValidationError
+ERROR 2025-03-26 09:19:36,636 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:19:36,637 log Internal Server Error: /api/tasks/tasks/4bc0f977-3ce0-4e7d-a43e-fb079fcba46a/
+ERROR 2025-03-26 09:19:37,066 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:19:37,067 log Internal Server Error: /api/tasks/tasks/de8a2a00-8099-46a3-bd25-224fd2ad1de0/
+ERROR 2025-03-26 09:19:37,483 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:19:37,484 log Internal Server Error: /api/tasks/tasks/
+ERROR 2025-03-26 09:19:38,051 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:19:38,053 log Internal Server Error: /api/tasks/tasks/797822ca-1dee-405f-9e13-c0672854faad/
+ERROR 2025-03-26 09:19:55,670 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:19:55,672 log Internal Server Error: /api/tasks/tasks/
+ERROR 2025-03-26 09:20:29,874 error_utils [SYS_INT_001] API异常: ValueError
+ERROR 2025-03-26 09:20:29,876 log Internal Server Error: /api/tasks/tasks/
+ERROR 2025-03-26 09:21:01,472 error_utils [SYS_INT_001] API异常: AttributeError
+ERROR 2025-03-26 09:21:01,474 log Internal Server Error: /api/tasks/tasks/
+ERROR 2025-03-26 09:22:04,728 error_utils [SYS_INT_001] API异常: ValidationError
+ERROR 2025-03-26 09:22:43,742 error_utils [SYS_INT_001] API异常: ValidationError

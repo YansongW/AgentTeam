@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket消息测试</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .message-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .system-message {
+            background-color: #6c757d;
+            color: white;
+        }
+        .agent-message {
+            background-color: #28a745;
+            color: white;
+        }
+        .error-message {
+            background-color: #dc3545;
+            color: white;
+        }
+        .message-meta {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .typing-indicator {
+            font-style: italic;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        .sender-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>WebSocket消息测试</h1>
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        消息测试
+                    </div>
+                    <div class="card-body">
+                        <div class="message-container" id="messageContainer">
+                            <!-- 消息将在这里显示 -->
+                        </div>
+                        <div class="typing-indicator" id="typingIndicator"></div>
+                        <form id="messageForm">
+                            <div class="input-group mb-3">
+                                <input type="text" id="messageInput" class="form-control" placeholder="输入消息...">
+                                <button class="btn btn-primary" type="submit">发送</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        连接设置
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="roomInput" class="form-label">房间ID</label>
+                            <input type="text" class="form-control" id="roomInput" placeholder="例如: group_1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="usernameInput" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="usernameInput" placeholder="您的用户名">
+                        </div>
+                        <button class="btn btn-success w-100" id="connectBtn">连接</button>
+                        <button class="btn btn-danger w-100 mt-2" id="disconnectBtn" disabled>断开</button>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        连接状态
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-secondary" id="connectionStatus">未连接</div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        测试操作
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-outline-primary w-100 mb-2" id="sendPingBtn" disabled>发送Ping</button>
+                        <button class="btn btn-outline-info w-100 mb-2" id="sendTypingBtn" disabled>发送正在输入</button>
+                        <button class="btn btn-outline-warning w-100" id="sendReadReceiptBtn" disabled>发送已读回执</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let socket = null;
+            let messageIds = [];
+            let userId = "user_" + Math.floor(Math.random() * 10000);
+            let sessionId = null;
+
+            // DOM元素
+            const messageContainer = document.getElementById('messageContainer');
+            const messageForm = document.getElementById('messageForm');
+            const messageInput = document.getElementById('messageInput');
+            const connectBtn = document.getElementById('connectBtn');
+            const disconnectBtn = document.getElementById('disconnectBtn');
+            const roomInput = document.getElementById('roomInput');
+            const usernameInput = document.getElementById('usernameInput');
+            const connectionStatus = document.getElementById('connectionStatus');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const sendPingBtn = document.getElementById('sendPingBtn');
+            const sendTypingBtn = document.getElementById('sendTypingBtn');
+            const sendReadReceiptBtn = document.getElementById('sendReadReceiptBtn');
+
+            // 连接按钮点击事件
+            connectBtn.addEventListener('click', function() {
+                const room = roomInput.value.trim();
+                const username = usernameInput.value.trim();
+                
+                if (!room) {
+                    alert('请输入房间ID');
+                    return;
+                }
+                
+                if (!username) {
+                    alert('请输入用户名');
+                    return;
+                }
+                
+                userId = username;
+                connect(room);
+            });
+
+            // 断开按钮点击事件
+            disconnectBtn.addEventListener('click', function() {
+                disconnect();
+            });
+
+            // 表单提交事件
+            messageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const messageText = messageInput.value.trim();
+                if (messageText && socket) {
+                    sendMessage(messageText);
+                    messageInput.value = '';
+                }
+            });
+
+            // 发送Ping按钮
+            sendPingBtn.addEventListener('click', function() {
+                if (socket) {
+                    const pingMessage = {
+                        message_id: generateId(),
+                        message_type: "ping",
+                        sender: {
+                            id: userId,
+                            type: "user",
+                            name: usernameInput.value.trim()
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {},
+                        metadata: {}
+                    };
+                    socket.send(JSON.stringify(pingMessage));
+                    addMessage("发送Ping", "用户", "system-message");
+                }
+            });
+
+            // 发送正在输入按钮
+            sendTypingBtn.addEventListener('click', function() {
+                if (socket) {
+                    const typingMessage = {
+                        message_id: generateId(),
+                        message_type: "typing",
+                        sender: {
+                            id: userId,
+                            type: "user",
+                            name: usernameInput.value.trim()
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            status: "typing",
+                            remaining_text: messageInput.value.length
+                        },
+                        metadata: {}
+                    };
+                    socket.send(JSON.stringify(typingMessage));
+                    addMessage("发送'正在输入'状态", "用户", "system-message");
+                }
+            });
+
+            // 发送已读回执按钮
+            sendReadReceiptBtn.addEventListener('click', function() {
+                if (socket && messageIds.length > 0) {
+                    const readReceiptMessage = {
+                        message_id: generateId(),
+                        message_type: "read_receipt",
+                        sender: {
+                            id: userId,
+                            type: "user",
+                            name: usernameInput.value.trim()
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            message_ids: messageIds
+                        },
+                        metadata: {}
+                    };
+                    socket.send(JSON.stringify(readReceiptMessage));
+                    addMessage("发送已读回执", "用户", "system-message");
+                } else {
+                    alert("没有可标记为已读的消息");
+                }
+            });
+
+            // 连接WebSocket
+            function connect(room) {
+                // 关闭现有连接（如果有）
+                if (socket) {
+                    socket.close();
+                }
+                
+                // 获取CSRF令牌
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                
+                const csrftoken = getCookie('csrftoken');
+                
+                // 创建WebSocket连接
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const wsUrl = `${protocol}//${window.location.host}/ws/messaging/${room}/`;
+                
+                socket = new WebSocket(wsUrl);
+                updateStatus("正在连接...", "alert-warning");
+                
+                // 连接建立
+                socket.onopen = function(e) {
+                    updateStatus("已连接", "alert-success");
+                    connectBtn.disabled = true;
+                    disconnectBtn.disabled = false;
+                    sendPingBtn.disabled = false;
+                    sendTypingBtn.disabled = false;
+                    sendReadReceiptBtn.disabled = false;
+                    addMessage("WebSocket连接已建立", "系统", "system-message");
+                };
+                
+                // 接收消息
+                socket.onmessage = function(e) {
+                    const data = JSON.parse(e.data);
+                    handleIncomingMessage(data);
+                };
+                
+                // 连接关闭
+                socket.onclose = function(e) {
+                    updateStatus("连接已关闭", "alert-danger");
+                    connectBtn.disabled = false;
+                    disconnectBtn.disabled = true;
+                    sendPingBtn.disabled = true;
+                    sendTypingBtn.disabled = true;
+                    sendReadReceiptBtn.disabled = true;
+                    addMessage("WebSocket连接已关闭", "系统", "system-message");
+                };
+                
+                // 连接错误
+                socket.onerror = function(e) {
+                    updateStatus("连接错误", "alert-danger");
+                    addMessage("WebSocket连接发生错误", "系统", "error-message");
+                };
+            }
+
+            // 断开连接
+            function disconnect() {
+                if (socket) {
+                    socket.close();
+                    socket = null;
+                }
+            }
+
+            // 发送消息
+            function sendMessage(text) {
+                if (socket) {
+                    const messageId = generateId();
+                    const message = {
+                        message_id: messageId,
+                        message_type: "chat",
+                        sender: {
+                            id: userId,
+                            type: "user",
+                            name: usernameInput.value.trim()
+                        },
+                        timestamp: new Date().toISOString(),
+                        payload: {
+                            text: text,
+                            format: "text"
+                        },
+                        metadata: {
+                            client_info: {
+                                platform: "web",
+                                device: "browser"
+                            }
+                        }
+                    };
+                    
+                    socket.send(JSON.stringify(message));
+                    messageIds.push(messageId);
+                    addMessage(text, usernameInput.value.trim(), "user-message");
+                }
+            }
+
+            // 处理收到的消息
+            function handleIncomingMessage(data) {
+                console.log("收到消息:", data);
+                
+                // 处理不同类型的消息
+                switch (data.message_type) {
+                    case "connect_ack":
+                        sessionId = data.payload.session_id;
+                        addMessage(`连接确认: 会话ID ${sessionId}`, "系统", "system-message");
+                        break;
+                        
+                    case "chat":
+                    case "agent_response":
+                        const sender = data.sender;
+                        const text = data.payload.text;
+                        if (sender.type === "agent") {
+                            addMessage(text, sender.name, "agent-message", data);
+                            messageIds.push(data.message_id);
+                        } else {
+                            addMessage(text, sender.name, "user-message", data);
+                        }
+                        break;
+                        
+                    case "typing":
+                        const typingSender = data.sender;
+                        if (typingSender.id !== userId) { // 不显示自己的输入状态
+                            typingIndicator.textContent = `${typingSender.name} 正在输入...`;
+                            setTimeout(() => {
+                                typingIndicator.textContent = '';
+                            }, 3000);
+                        }
+                        break;
+                        
+                    case "error":
+                        addMessage(`错误: ${data.payload.text}`, "系统", "error-message");
+                        break;
+                        
+                    case "pong":
+                        addMessage("收到Pong响应", "系统", "system-message");
+                        break;
+                        
+                    default:
+                        addMessage(`未处理的消息类型: ${data.message_type}`, "系统", "system-message");
+                }
+            }
+
+            // 添加消息到界面
+            function addMessage(text, sender, messageClass, fullMessage = null) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${messageClass}`;
+                
+                const senderDiv = document.createElement('div');
+                senderDiv.className = 'sender-name';
+                senderDiv.textContent = sender;
+                messageDiv.appendChild(senderDiv);
+                
+                const textDiv = document.createElement('div');
+                textDiv.className = 'message-text';
+                textDiv.textContent = text;
+                messageDiv.appendChild(textDiv);
+                
+                if (fullMessage) {
+                    // 添加元数据
+                    const metaDiv = document.createElement('div');
+                    metaDiv.className = 'message-meta';
+                    
+                    if (fullMessage.message_type === "agent_response" && fullMessage.metadata && fullMessage.metadata.rule_name) {
+                        metaDiv.textContent = `规则: ${fullMessage.metadata.rule_name}`;
+                    } else {
+                        metaDiv.textContent = `ID: ${fullMessage.message_id.substr(0, 8)}...`;
+                    }
+                    
+                    messageDiv.appendChild(metaDiv);
+                }
+                
+                messageContainer.appendChild(messageDiv);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            // 更新连接状态
+            function updateStatus(text, className) {
+                connectionStatus.textContent = text;
+                connectionStatus.className = `alert ${className}`;
+            }
+
+            // 生成消息ID
+            function generateId() {
+                return 'msg_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+            }
+        });
+    </script>
+</body>
+</html> 

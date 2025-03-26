@@ -1,0 +1,136 @@
+/* 代理管理页面样式 */
+
+/* 代理列表样式 */
+.table th {
+    font-weight: 600;
+    color: #495057;
+}
+
+.agent-status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.agent-status.online {
+    background-color: #28a745;
+}
+
+.agent-status.offline {
+    background-color: #6c757d;
+}
+
+.agent-status.busy {
+    background-color: #ffc107;
+}
+
+.agent-status.disabled {
+    background-color: #dc3545;
+}
+
+/* 代理编辑表单样式 */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* 技能选择器样式 */
+.skill-card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.skill-card:hover {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.skill-card.selected {
+    border-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.skill-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.skill-card .skill-name {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.skill-card .card-body {
+    padding: 1rem;
+}
+
+.skill-card .skill-description {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.custom-config-toggle {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.custom-config-panel {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    display: none;
+}
+
+.custom-config-panel.show {
+    display: block;
+}
+
+/* 代理详情样式 */
+#detailAgentName {
+    margin-bottom: 0.5rem;
+}
+
+#detailAgentDescription {
+    color: #495057;
+}
+
+#detailSystemPrompt {
+    white-space: pre-wrap;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.detail-info-item {
+    margin-bottom: 0.5rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 767.98px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .row > [class*="col-"] {
+        margin-bottom: 1rem;
+    }
+} 
