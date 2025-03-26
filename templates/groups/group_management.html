@@ -176,46 +176,8 @@
     </div>
 </div>
 
-<!-- 群组卡片 -->
-<div class="card group-card mb-3">
-    <div class="card-body">
-        <div class="d-flex align-items-center">
-            <div class="group-avatar me-3">
-                {% if group.avatar %}
-                <img src="{{ group.avatar.url }}" alt="{{ group.name }}" class="img-fluid rounded">
-                {% else %}
-                <div class="default-avatar">{{ group.name|slice:":1" }}</div>
-                {% endif %}
-            </div>
-            <div class="flex-grow-1">
-                <h5 class="card-title mb-1">{{ group.name }}</h5>
-                <p class="card-text text-muted small">{{ group.description }}</p>
-                <div class="d-flex align-items-center small">
-                    <span class="badge bg-primary me-2">{{ group.get_member_count }} 成员</span>
-                    {% if group.is_public %}
-                    <span class="badge bg-success me-2">公开</span>
-                    {% else %}
-                    <span class="badge bg-secondary me-2">私有</span>
-                    {% endif %}
-                    <span class="text-muted">创建于: {{ group.created_at|date:"Y-m-d" }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="card-actions mt-3">
-            <a href="{% url 'group_chat' group_id=group.id %}" class="btn btn-primary btn-sm">
-                <i class="bi bi-chat-dots"></i> 进入群聊
-            </a>
-            {% if user == group.owner %}
-            <button class="btn btn-outline-primary btn-sm edit-group-btn" data-group-id="{{ group.id }}">
-                <i class="bi bi-pencil"></i> 编辑
-            </button>
-            <button class="btn btn-outline-danger btn-sm delete-group-btn" data-group-id="{{ group.id }}">
-                <i class="bi bi-trash"></i> 删除
-            </button>
-            {% endif %}
-        </div>
-    </div>
-</div>
+<!-- 移除静态的群组卡片模板 -->
+
 {% endblock %}
 
 {% block extra_js %}

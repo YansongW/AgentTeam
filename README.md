@@ -90,6 +90,8 @@
 ├── Task_list.md                 # 任务列表
 ├── 开发规范.md                   # 开发规范文档
 ├── .env.example                 # 环境变量示例
+├── .env                         # 环境变量配置
+├── create_test_data.py          # 测试数据创建脚本
 │
 ├── chatbot_platform/            # 主项目配置目录
 │   ├── __init__.py              # 包初始化文件
@@ -126,7 +128,12 @@
 │   │
 │   ├── migrations/              # 数据库迁移文件
 │   ├── static/                  # 静态资源
+│   │   ├── css/                 # CSS样式文件
+│   │   └── js/                  # JavaScript文件
 │   └── templates/               # HTML模板
+│       ├── agent_management.html # 代理管理界面
+│       ├── rule_management.html # 规则管理界面
+│       └── agent_demo.html      # 代理演示界面
 │
 ├── messaging/                   # 消息处理应用
 │   ├── __init__.py              # 包初始化文件
@@ -143,6 +150,7 @@
 │   ├── views.py                 # 视图函数/类
 │   ├── migrations/              # 数据库迁移文件
 │   └── templates/               # HTML模板
+│       └── websocket_test.html  # WebSocket测试页面
 │
 ├── groups/                      # 群组管理应用
 │   ├── __init__.py              # 包初始化文件
@@ -188,7 +196,22 @@
 │   └── migrations/              # 数据库迁移文件
 │
 ├── static/                      # 全局静态资源
+│   ├── agents/                  # 代理相关静态资源
+│   │   ├── css/                 # 代理CSS样式
+│   │   └── js/                  # 代理JavaScript
+│   ├── messaging/               # 消息相关静态资源
+│   │   ├── css/                 # 消息CSS样式
+│   │   └── js/                  # 消息JavaScript
+│   └── images/                  # 图片资源
+│
 ├── templates/                   # 全局HTML模板
+│   ├── base.html                # 基础模板
+│   ├── agents/                  # 代理相关模板
+│   ├── groups/                  # 群组相关模板
+│   ├── messaging/               # 消息相关模板
+│   └── tasks/                   # 任务相关模板
+│
+├── staticfiles/                 # 收集的静态文件
 ├── docs/                        # 文档目录
 └── logs/                        # 日志目录
 ```
@@ -206,10 +229,12 @@
 | views.py | 实现代理相关的API视图，包含代理创建、更新、查询和监听规则管理 |
 | async_processor.py | 异步消息处理器，负责将消息放入队列并异步处理代理响应 |
 | handlers.py | 响应处理器，定义各类型响应的处理函数（自动回复、通知、任务创建、动作执行等） |
-| utils/sentiment_analyzer.py | 情感分析工具，用于分析消息情感倾向 |
-| utils/topic_analyzer.py | 主题分析工具，用于分析消息主题相关性 |
-| tests/test_rule_engine.py | 规则引擎的单元测试代码 |
-| tests/test_async_processor.py | 异步处理器的单元测试代码 |
+| utils/ | 工具子包，包含情感分析、主题分析等工具 |
+| templates/agent_management.html | 代理管理前端界面，提供创建和管理代理的用户界面 |
+| templates/rule_management.html | 规则管理前端界面，用于配置代理的监听规则 |
+| templates/agent_demo.html | 代理演示页面，展示如何使用@提及功能与代理交互 |
+| static/agents/css/ | 代理相关的CSS样式文件 |
+| static/agents/js/ | 代理相关的JavaScript文件，实现前端交互逻辑 |
 
 ### 2. messaging - 消息处理模块
 
@@ -217,11 +242,14 @@
 
 | 文件/目录 | 功能描述 |
 |---------|---------|
-| models.py | 定义Message、MessageDeliveryStatus等数据模型 |
+| models.py | 定义Message、MessageDeliveryStatus等数据模型，用于存储和跟踪消息 |
 | consumers.py | WebSocket消费者，处理实时消息通信，包含连接、接收、广播等功能 |
-| routing.py | WebSocket路由配置 |
-| validators.py | 消息验证器，确保消息格式正确 |
-| views.py | 实现消息相关的HTTP API |
+| routing.py | WebSocket路由配置，将WebSocket请求路由到相应的消费者 |
+| validators.py | 消息验证器，确保消息格式正确，验证消息内容和元数据 |
+| views.py | 实现消息相关的HTTP API，如发送消息、获取历史消息等功能 |
+| templates/websocket_test.html | WebSocket测试页面，用于测试实时消息通信 |
+| static/messaging/css/ | 消息相关的CSS样式文件 |
+| static/messaging/js/ | 消息相关的JavaScript文件，实现前端消息处理逻辑 |
 
 ### 3. groups - 群组管理模块
 
@@ -229,10 +257,12 @@
 
 | 文件/目录 | 功能描述 |
 |---------|---------|
-| models.py | 定义Group、GroupMember等数据模型 |
-| views.py | 实现群组相关的API，包含创建、加入、退出等功能 |
-| permissions.py | 群组权限控制，定义不同角色的权限 |
+| models.py | 定义Group、GroupMember等数据模型，管理群组结构和成员关系 |
+| views.py | 实现群组相关的API，包含创建、加入、退出群组等功能 |
+| permissions.py | 群组权限控制，定义不同角色的权限和访问控制 |
 | serializers.py | API序列化器，处理群组数据的序列化和反序列化 |
+| admin.py | 管理界面配置，提供群组管理的后台界面 |
+| static/ | 群组相关的静态资源，包括CSS和JavaScript文件 |
 
 ### 4. task_management - 任务管理模块
 
@@ -240,39 +270,131 @@
 
 | 文件/目录 | 功能描述 |
 |---------|---------|
-| models.py | 定义Task、TaskAssignment、TaskComment、TaskTag等数据模型 |
+| models.py | 定义Task、TaskAssignment、TaskComment、TaskTag等数据模型，管理任务及其关联数据 |
 | views.py | 实现任务相关的API，包含创建、分配、状态更新、批量操作等功能 |
 | serializers.py | API序列化器，处理任务数据的序列化和反序列化 |
 | signals.py | 信号处理器，处理任务状态变更、任务分配等事件的通知 |
 | admin.py | 管理界面配置，提供直观的任务管理UI |
 | tests.py | 任务模块的单元测试代码 |
-| static/js/task_management.js | 前端交互逻辑，处理任务列表、创建、编辑等操作 |
-| static/css/task_management.css | 任务界面样式 |
-| templates/tasks/task_list.html | 任务列表页面模板 |
+| static/ | 任务管理相关的静态资源，包括CSS和JavaScript文件 |
+| templates/ | 任务管理相关的HTML模板，提供任务管理界面 |
 
 ### 5. users - 用户管理模块
 
-用户管理模块负责用户账户的注册、认证和管理。
+用户管理模块负责用户的注册、身份验证、权限管理和个人资料管理。
 
 | 文件/目录 | 功能描述 |
 |---------|---------|
-| models.py | 自定义用户模型 |
-| views.py | 实现用户相关的API，包含注册、登录、个人资料管理等 |
-| serializers.py | 用户数据序列化器 |
-| utils.py | 用户相关工具函数，如密码重置、邮件验证等 |
+| models.py | 定义User、Profile等数据模型，管理用户数据和个人资料 |
+| views.py | 实现用户相关的API，包含注册、登录、个人资料管理等功能 |
+| serializers.py | API序列化器，处理用户数据的序列化和反序列化 |
+| permissions.py | 用户权限控制，定义不同用户的权限和访问控制 |
+| utils.py | 用户相关的工具函数，如密码重置、邮件通知等 |
+| tests.py | 用户模块的单元测试代码 |
 
-### 6. chatbot_platform - 核心配置模块
+## 前端界面
 
-项目的核心配置模块，包含全局设置和配置。
+平台提供了直观的用户界面，帮助用户管理和使用AI代理。主要界面包括：
 
-| 文件/目录 | 功能描述 |
-|---------|---------|
-| settings.py | Django项目设置，包含数据库、中间件、认证等配置 |
-| urls.py | 全局URL路由配置 |
-| asgi.py | ASGI配置，支持WebSocket |
-| middleware.py | 自定义中间件，处理认证、日志等 |
-| error_codes.py | 错误代码定义 |
-| error_utils.py | 错误处理工具 |
+1. **代理管理界面** - 创建、编辑和管理AI代理，配置代理属性和行为
+2. **规则管理界面** - 设置代理的监听规则和响应行为
+3. **代理演示界面** - 展示如何使用@提及功能与代理交互
+4. **WebSocket测试界面** - 测试实时消息通信功能
+5. **任务管理界面** - 创建、分配和追踪任务
+
+所有前端界面采用响应式设计，确保在不同设备上都能提供良好的用户体验。界面使用Bootstrap框架构建，结合现代CSS技术和JavaScript库，实现了丰富的交互功能和视觉效果。
+
+## 开发环境设置
+
+1. 克隆项目仓库
+   ```
+   git clone https://github.com/YansongW/AgentTeam.git
+   cd AgentTeam
+   ```
+
+2. 创建并激活虚拟环境
+   ```
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   venv\Scripts\activate     # Windows
+   ```
+
+3. 安装依赖
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. 环境变量配置
+   ```
+   cp .env.example .env
+   # 编辑.env文件，填写必要的配置
+   ```
+
+5. 数据库迁移
+   ```
+   python manage.py migrate
+   ```
+
+6. 创建超级用户
+   ```
+   python manage.py createsuperuser
+   ```
+
+7. 收集静态文件
+   ```
+   python manage.py collectstatic
+   ```
+
+8. 启动开发服务器
+   ```
+   python manage.py runserver
+   ```
+
+## 贡献指南
+
+欢迎为项目贡献代码、报告问题或提交功能请求。请参阅`开发规范.md`了解更多关于代码风格和贡献流程的信息。
+
+## 当前开发状态
+
+本项目正处于活跃开发阶段，主要模块已经完成基础功能实现：
+
+- ✅ 用户管理系统（注册、登录、权限控制）
+- ✅ 代理创建和配置功能
+- ✅ 代理监听规则管理
+- ✅ 实时消息传递系统
+- ✅ 群组创建和管理
+- ✅ 基本的任务管理功能
+- ✅ 前端基础界面和交互
+- 🔄 代理智能行为优化
+- 🔄 任务管理高级功能
+- 🔄 移动端适配优化
+- 📅 权限系统完善（计划中）
+- 📅 高级报表和分析（计划中）
+- 📅 代理市场功能（计划中）
+
+## 技术栈
+
+### 后端技术
+- **框架**: Django (Python)
+- **API**: Django REST Framework
+- **数据库**: SQLite (开发) / PostgreSQL (生产)
+- **WebSocket**: Django Channels
+- **异步处理**: 自定义异步消息处理器
+- **NLP工具**: 情感分析、主题分析
+- **认证**: JWT (JSON Web Tokens)
+
+### 前端技术
+- **框架**: Bootstrap 5
+- **JavaScript**: 原生JS + 部分功能使用jQuery
+- **WebSocket客户端**: JavaScript WebSocket API
+- **CSS**: 自定义样式 + Bootstrap组件
+- **响应式设计**: 支持桌面和移动设备
+
+### 开发工具
+- **版本控制**: Git
+- **测试**: Django TestCase
+- **文档**: Markdown
+- **环境管理**: Python venv
 
 ## 关键工作流程
 
@@ -362,71 +484,53 @@
  用户/代理
 ```
 
-## 技术栈
+### 代理管理界面交互流程
 
-- **后端**: Django (Python)
-- **数据库**: SQLite (开发环境) / PostgreSQL (生产环境)
-- **前端**: HTML, CSS, JavaScript
-- **WebSocket**: Django Channels
-- **消息队列**: 内置异步队列 (AsyncMessageProcessor)
-- **NLP工具**: TextBlob (情感分析), Jieba (中文分词), Word2Vec (主题分析)
-- **认证**: JWT (JSON Web Tokens)
-- **容器化**: Docker（规划中）
-
-## 开发环境设置
-
-### 后端设置
-
-1. 克隆代码库:
-   ```
-   git clone <repository-url>
-   cd multi-agent-platform
-   ```
-
-2. 创建虚拟环境:
-   ```
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   venv\Scripts\activate     # Windows
-   ```
-
-3. 安装依赖:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. 应用数据库迁移:
-   ```
-   python manage.py migrate
-   ```
-
-5. 创建超级用户:
-   ```
-   python manage.py createsuperuser
-   ```
-
-6. 运行开发服务器:
-   ```
-   python manage.py runserver
-   ```
-
-7. 访问管理界面:
-   http://127.0.0.1:8000/admin/
-
-## 贡献指南
-
-请参考[开发规范.md](./开发规范.md)了解代码风格和贡献流程。 
-
-## 当前开发状态
-
-- [x] 用户认证系统
-- [x] 代理创建和管理
-- [x] 群组聊天功能
-- [x] WebSocket实时通信
-- [x] 代理监听规则引擎
-- [x] 异步消息处理
-- [x] 情感分析和主题分析
-- [x] 任务管理系统
-- [ ] 数据分析仪表板
-- [ ] AI模型集成
-- [ ] 移动端适配 # AgentTeam
+```
+ 用户
+  |
+  | 访问代理管理页面
+  v
++---------------------+
+| 加载页面            |
+| (agent_management.html)
++---------------------+
+  |
+  | 页面加载完成
+  v
++---------------------+
+| 初始化数据加载      |
+| (loadAgents)        |
++---------------------+
+  |
+  | API请求
+  v
++---------------------+
+| 后端API响应         |
+| (AgentViewSet)      |
++---------------------+
+  |
+  | 渲染代理列表
+  v
++---------------------+
+| 创建/编辑/删除代理  |
+| (前端JS事件处理)    |
++---------------------+
+  |
+  | 表单提交/API请求
+  v
++---------------------+
+| 后端处理            |
+| (数据验证与存储)    |
++---------------------+
+  |
+  | 响应结果
+  v
++---------------------+
+| 前端更新UI          |
+| (显示结果/错误提示) |
++---------------------+
+  |
+  v
+ 用户
+```

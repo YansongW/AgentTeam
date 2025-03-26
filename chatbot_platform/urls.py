@@ -46,7 +46,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     
     # 根路径重定向到群组管理页面
-    path('', RedirectView.as_view(url='/groups/groups/'), name='home'),
+    path('', RedirectView.as_view(url='/groups/management/'), name='home'),
     
     # API路由
     path("api/users/", include("users.urls")),
@@ -58,6 +58,9 @@ urlpatterns = [
     # 页面路由
     path("agent-rules/", include((agents_page_urls, "agents"), namespace="agent_rules")),
     path("agents/", include((agents_urlpatterns, "agents"), namespace="agents")),
+    
+    # 为base.html模板中的链接添加直接路由
+    path("agent/", include(agents_urlpatterns)),
     
     # WebSocket测试页面
     path("websocket-test/", include("messaging.urls_websocket")),

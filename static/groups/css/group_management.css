@@ -1,0 +1,149 @@
+/* 群组管理页面样式 */
+.group-card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.group-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.group-avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e3f2fd;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.default-avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e3f2fd;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.member-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.member-avatars {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.member-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #28a745;
+    border: 2px solid white;
+}
+
+.agent-badge {
+    background-color: #17a2b8;
+}
+
+.member-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.member-item:last-child {
+    border-bottom: none;
+}
+
+.member-info {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.member-name {
+    font-weight: bold;
+}
+
+.member-role {
+    font-size: 0.8em;
+    color: #6c757d;
+}
+
+.member-agent {
+    color: #17a2b8;
+}
+
+.member-admin {
+    color: #dc3545;
+}
+
+.member-member {
+    color: #28a745;
+}
+
+.member-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* 群组创建表单 */
+.group-form-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.group-form-section:last-child {
+    border-bottom: none;
+}
+
+/* 标签页样式 */
+.nav-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    font-weight: 500;
+    padding: 10px 15px;
+}
+
+.nav-tabs .nav-link.active {
+    color: #4a6baf;
+    border-bottom: 2px solid #4a6baf;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #4a6baf;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+} 

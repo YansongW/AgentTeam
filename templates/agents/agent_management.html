@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}代理管理 | Multi-Agent协作平台{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<link rel="stylesheet" href="{% static 'agents/css/agent_management.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="h3 mb-0">代理管理</h1>
+                <p class="text-muted mb-0">管理您的AI代理，配置其角色和功能</p>
+            </div>
+            <button class="btn btn-primary btn-action" id="createAgentBtn">
+                <i class="fas fa-plus-circle me-2"></i> 创建新代理
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 搜索和过滤部分 -->
+    <div class="content-card mb-4">
+        <div class="card-body p-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" id="searchAgent" placeholder="搜索代理名称或描述...">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label">按角色筛选</label>
+                    <select class="form-select" id="roleFilter">
+                        <option value="">全部角色</option>
+                        <option value="product_manager">产品经理</option>
+                        <option value="frontend_dev">前端开发</option>
+                        <option value="backend_dev">后端开发</option>
+                        <option value="ux_designer">用户体验设计师</option>
+                        <option value="qa_tester">测试工程师</option>
+                        <option value="data_analyst">数据分析师</option>
+                        <option value="virtual_friend">虚拟朋友</option>
+                        <option value="assistant">助手</option>
+                        <option value="custom">自定义</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label class="form-label">按状态筛选</label>
+                    <select class="form-select" id="statusFilter">
+                        <option value="">全部状态</option>
+                        <option value="online">在线</option>
+                        <option value="offline">离线</option>
+                        <option value="busy">忙碌</option>
+                        <option value="disabled">已禁用</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="fas fa-sync-alt me-2"></i> 重置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 代理列表 -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="alert alert-info" id="noAgentsAlert" style="display: none;">
+                <i class="fas fa-info-circle me-2"></i> 您还没有创建任何代理。点击"创建新代理"按钮开始创建。
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="agentList">
+        <!-- 代理卡片将通过JS动态加载 -->
+    </div>
+</div>
+
+<!-- Toast 消息容器 -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- 创建/编辑代理模态框 -->
+<div class="modal fade" id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agentModalLabel">创建新代理</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body">
+                <form id="agentForm">
+                    <input type="hidden" id="agentId">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="agentName" class="form-label">代理名称</label>
+                            <input type="text" class="form-control" id="agentName" placeholder="给您的代理起个名字" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="agentRole" class="form-label">代理角色</label>
+                            <select class="form-select" id="agentRole" required>
+                                <option value="product_manager">产品经理</option>
+                                <option value="frontend_dev">前端开发</option>
+                                <option value="backend_dev">后端开发</option>
+                                <option value="ux_designer">用户体验设计师</option>
+                                <option value="qa_tester">测试工程师</option>
+                                <option value="data_analyst">数据分析师</option>
+                                <option value="virtual_friend">虚拟朋友</option>
+                                <option value="assistant">助手</option>
+                                <option value="custom">自定义</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="agentDescription" class="form-label">代理描述</label>
+                        <textarea class="form-control" id="agentDescription" rows="3" placeholder="描述这个代理的功能和用途"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="systemPrompt" class="form-label">系统提示词</label>
+                        <textarea class="form-control" id="systemPrompt" rows="4" placeholder="定义代理的个性和行为方式"></textarea>
+                        <div class="form-text">系统提示词决定了代理的行为模式和个性特征，详细的提示词有助于让代理表现得更加符合预期。</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="agentStatus" class="form-label">初始状态</label>
+                            <select class="form-select" id="agentStatus">
+                                <option value="offline">离线</option>
+                                <option value="online">在线</option>
+                                <option value="busy">忙碌</option>
+                                <option value="disabled">已禁用</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" id="isPublic">
+                                <label class="form-check-label" for="isPublic">
+                                    公开此代理（其他用户可以看到并使用）
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion" id="agentAdvancedSettings">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingModelConfig">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseModelConfig" aria-expanded="false" aria-controls="collapseModelConfig">
+                                    模型配置
+                                </button>
+                            </h2>
+                            <div id="collapseModelConfig" class="accordion-collapse collapse" aria-labelledby="headingModelConfig" data-bs-parent="#agentAdvancedSettings">
+                                <div class="accordion-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="modelName" class="form-label">模型名称</label>
+                                            <select class="form-select" id="modelName">
+                                                <option value="gpt-4">GPT-4</option>
+                                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                                <option value="claude-3">Claude 3</option>
+                                                <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+                                                <option value="claude-3-opus">Claude 3 Opus</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="temperatureSlider" class="form-label">温度: <span id="temperatureValue">0.7</span></label>
+                                            <input type="range" class="form-range" id="temperatureSlider" min="0" max="1" step="0.1" value="0.7">
+                                            <div class="form-text">较低的值使输出更确定，较高的值使输出更随机创意</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="maxTokens" class="form-label">最大令牌数</label>
+                                            <input type="number" class="form-control" id="maxTokens" value="1000" min="1">
+                                            <div class="form-text">设置模型生成的最大令牌数量</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="topP" class="form-label">Top P</label>
+                                            <input type="number" class="form-control" id="topP" value="0.9" min="0" max="1" step="0.1">
+                                            <div class="form-text">控制模型选择输出令牌的概率阈值</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSkills">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills">
+                                    技能配置
+                                </button>
+                            </h2>
+                            <div id="collapseSkills" class="accordion-collapse collapse" aria-labelledby="headingSkills" data-bs-parent="#agentAdvancedSettings">
+                                <div class="accordion-body">
+                                    <div class="row" id="skillsContainer">
+                                        <!-- 技能列表将通过JS动态加载 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingKnowledgeBase">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKnowledgeBase" aria-expanded="false" aria-controls="collapseKnowledgeBase">
+                                    知识库配置
+                                </button>
+                            </h2>
+                            <div id="collapseKnowledgeBase" class="accordion-collapse collapse" aria-labelledby="headingKnowledgeBase" data-bs-parent="#agentAdvancedSettings">
+                                <div class="accordion-body">
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="enableKnowledgeBase">
+                                            <label class="form-check-label" for="enableKnowledgeBase">启用知识库</label>
+                                        </div>
+                                    </div>
+                                    <div id="knowledgeBaseSettings" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="knowledgeBaseSelect" class="form-label">选择知识库</label>
+                                            <select class="form-select" id="knowledgeBaseSelect">
+                                                <option value="">-- 选择知识库 --</option>
+                                                <!-- 知识库选项将通过JS动态加载 -->
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="button" class="btn btn-outline-secondary" id="createKnowledgeBaseBtn">
+                                                <i class="fas fa-plus-circle me-2"></i> 创建新知识库
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveAgentBtn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 删除代理确认模态框 -->
+<div class="modal fade" id="deleteAgentModal" tabindex="-1" aria-labelledby="deleteAgentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAgentModalLabel">确认删除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+            </div>
+            <div class="modal-body">
+                <p>您确定要删除代理 <span id="agentNameToDelete" class="fw-bold"></span> 吗？此操作不可逆。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteAgent">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'agents/js/agent_management.js' %}"></script>
+{% endblock %} 

@@ -29,4 +29,5 @@ page_urlpatterns = [
 # 所有URL模式（API和页面）
 urlpatterns = [
     path('demo/', agent_demo, name='agent_demo'),
+    path('management/', agent_management_view, name='agent_management'),
 ] 

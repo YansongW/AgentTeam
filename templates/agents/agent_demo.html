@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}代理演示 | Multi-Agent协作平台{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: calc(100vh - 200px);
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: #f5f7fa;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 75%;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        border-bottom-right-radius: 4px;
+        float: right;
+        clear: both;
+    }
+    
+    .agent-message {
+        background-color: #e9ecef;
+        color: #212529;
+        border-bottom-left-radius: 4px;
+        float: left;
+        clear: both;
+    }
+    
+    .chat-input {
+        padding: 15px;
+        background-color: #fff;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .input-wrapper {
+        position: relative;
+    }
+    
+    .chat-input input {
+        border-radius: 30px;
+        padding-right: 50px;
+    }
+    
+    .send-button {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .agent-selector {
+        margin-bottom: 20px;
+    }
+    
+    .agent-card {
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .agent-card:hover {
+        border-color: #007bff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+    
+    .agent-card.selected {
+        border-color: #007bff;
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    .agent-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .agent-description {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    
+    .agent-status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+    
+    .agent-status.online {
+        background-color: #28a745;
+    }
+    
+    .agent-status.offline {
+        background-color: #dc3545;
+    }
+    
+    .message-time {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.8);
+        position: absolute;
+        bottom: -20px;
+        right: 10px;
+    }
+    
+    .agent-message .message-time {
+        color: #6c757d;
+    }
+    
+    .typing-indicator {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        display: inline-block;
+        margin-bottom: 15px;
+        clear: both;
+        float: left;
+        font-style: italic;
+        color: #6c757d;
+        display: none;
+    }
+    
+    .send-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .message-sender {
+        font-weight: 600;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+    }
+    
+    .user-message .message-content {
+        word-break: break-word;
+    }
+    
+    .agent-message .message-content {
+        word-break: break-word;
+    }
+    
+    .message-actions {
+        margin-top: 5px;
+        text-align: right;
+    }
+    
+    .message-action-btn {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.8);
+        background: none;
+        border: none;
+        padding: 0;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+    .agent-message .message-action-btn {
+        color: #6c757d;
+    }
+    
+    .message-action-btn:hover {
+        text-decoration: underline;
+    }
+    
+    .agent-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 10px;
+    }
+    
+    .agent-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .agent-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-3">@代理演示</h2>
+            <p class="text-muted">在消息中使用@符号提及代理，代理将自动回复您的消息。</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h5 class="mb-0">聊天室</h5>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message agent-message">
+                        <div class="message-sender">系统</div>
+                        <div class="message-content">欢迎使用@代理演示，请在消息中使用@符号提及代理，例如: @助手 你好!</div>
+                        <div class="message-time">刚刚</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="typing-indicator" id="typingIndicator">正在输入...</div>
+                </div>
+                <div class="chat-input">
+                    <div class="input-wrapper">
+                        <input type="text" class="form-control" id="messageInput" placeholder="输入消息，使用 @ 提及代理...">
+                        <button class="btn btn-primary send-button" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="agent-selector">
+                <h5 class="mb-3">可用代理</h5>
+                <div id="agentList">
+                    <!-- 代理列表将通过 JavaScript 动态加载 -->
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <p class="mt-2">正在加载代理列表...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM元素
+    const chatMessages = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+    const agentList = document.getElementById('agentList');
+    const typingIndicator = document.getElementById('typingIndicator');
+    
+    // 加载代理列表
+    loadAgents();
+    
+    // 发送消息事件
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    
+    // 加载代理列表
+    function loadAgents() {
+        fetch('/api/agents/?status=online')
+            .then(response => response.json())
+            .then(data => {
+                renderAgentList(data);
+            })
+            .catch(error => {
+                console.error('Error loading agents:', error);
+                agentList.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i> 加载代理列表失败，请刷新页面重试。
+                    </div>
+                `;
+            });
+    }
+    
+    // 渲染代理列表
+    function renderAgentList(agents) {
+        if (agents.length === 0) {
+            agentList.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> 当前没有在线的代理。
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        agents.forEach(agent => {
+            html += `
+                <div class="agent-card" data-agent-id="${agent.id}" data-agent-name="${agent.name}">
+                    <div class="agent-info">
+                        <div class="agent-avatar">
+                            <img src="/static/images/user_avatar.png" alt="${agent.name}">
+                        </div>
+                        <div>
+                            <div class="agent-name">
+                                <span class="agent-status ${agent.status}"></span>
+                                ${agent.name}
+                            </div>
+                            <div class="agent-description">${agent.description || '暂无描述'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        agentList.innerHTML = html;
+        
+        // 为代理卡片添加点击事件
+        document.querySelectorAll('.agent-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const agentName = this.dataset.agentName;
+                messageInput.value = `@${agentName} `;
+                messageInput.focus();
+            });
+        });
+    }
+    
+    // 发送消息
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+        
+        // 添加用户消息到聊天区域
+        addMessage(message, 'user');
+        
+        // 解析@提及
+        const mentions = parseMentions(message);
+        
+        // 如果有@提及，显示输入指示器
+        if (mentions.length > 0) {
+            typingIndicator.style.display = 'inline-block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // 模拟代理响应
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                
+                // 针对每个提及的代理发送请求
+                mentions.forEach(agentName => {
+                    // 模拟API请求
+                    setTimeout(() => {
+                        const response = `我是${agentName}，我收到了你的消息: "${message.replace('@' + agentName, '')}"`;
+                        addMessage(response, 'agent', agentName);
+                    }, 500 + Math.random() * 1000);
+                });
+            }, 1000 + Math.random() * 2000);
+        }
+        
+        // 清空输入框
+        messageInput.value = '';
+    }
+    
+    // 解析@提及
+    function parseMentions(message) {
+        const regex = /@(\w+)/g;
+        const mentions = [];
+        let match;
+        
+        while ((match = regex.exec(message)) !== null) {
+            mentions.push(match[1]);
+        }
+        
+        return mentions;
+    }
+    
+    // 添加消息到聊天区域
+    function addMessage(content, type, sender = null) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}-message`;
+        
+        // 发送者名称
+        if (sender) {
+            const senderDiv = document.createElement('div');
+            senderDiv.className = 'message-sender';
+            senderDiv.textContent = sender;
+            messageDiv.appendChild(senderDiv);
+        }
+        
+        // 消息内容
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.textContent = content;
+        messageDiv.appendChild(contentDiv);
+        
+        // 时间戳
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'message-time';
+        timeDiv.textContent = new Date().toLocaleTimeString();
+        messageDiv.appendChild(timeDiv);
+        
+        // 添加到聊天区域
+        chatMessages.appendChild(messageDiv);
+        
+        // 清除浮动
+        const clearfix = document.createElement('div');
+        clearfix.className = 'clearfix';
+        chatMessages.appendChild(clearfix);
+        
+        // 滚动到底部
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+});
+</script>
+{% endblock %} 

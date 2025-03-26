@@ -1,0 +1,303 @@
+/* Agent管理页面样式 */
+body {
+    background-color: #f5f7fa;
+}
+
+.page-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e3e8ef;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.content-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    overflow: hidden;
+    border: none;
+}
+
+.agent-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+}
+
+.agent-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.agent-card .agent-header {
+    background-color: #f8f9fa;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e9ecef;
+    padding: 15px 20px;
+    margin-bottom: 0;
+    box-shadow: none;
+}
+
+.agent-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.agent-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.agent-status-online {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.agent-status-offline {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.agent-status-busy {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.agent-status-disabled {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.agent-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.skill-item {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+.btn-action {
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+}
+
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 15px 20px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe;
+}
+
+.form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    height: auto;
+    border: 1px solid #ced4da;
+    transition: all 0.2s ease;
+}
+
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.custom-checkbox .custom-control-label {
+    padding-left: 10px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: #e9ecef;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1060;
+}
+
+.toast {
+    max-width: 350px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: none;
+}
+
+.toast-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.toast-body {
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    border-radius: 30px;
+    padding-left: 40px;
+    padding-right: 15px;
+    height: 45px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-color: #86b7fe;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.filter-dropdown {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 8px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-color: #ced4da;
+}
+
+.filter-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 200px;
+    margin-top: 5px;
+    display: none;
+    border: 1px solid #e9ecef;
+}
+
+.filter-menu.show {
+    display: block;
+}
+
+.filter-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.filter-item:hover {
+    background-color: #f8f9fa;
+}
+
+.filter-item.selected {
+    background-color: #e9ecef;
+    font-weight: 500;
+} 
